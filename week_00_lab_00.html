@@ -2,8 +2,13 @@
 <html lang="en">
     <head>
         <title>
-           My First Webpage
+            Webpage of Mine
         </title>
+            <meta property="og:url"           content="https://edd-shi.github.io/week_00_lab_00.html" />
+            <meta property="og:type"          content="website" />
+            <meta property="og:title"         content="Webpage of Mine" />
+            <meta property="og:description"   content="Just a regular website" />
+        
     </head>
 <body>
 <b>This is a test </b></h3>
@@ -16,7 +21,7 @@ This is normal
 <p>b, i are in-line tags; doesnt add new lines</p>
 
 <p>VSCode has syntax highlighting features</p>
-
+test
 <p>HTML IS FOR THE CONTENT OF A WEBPAGE; CSS FOR THE STYLE OF A WEBPAGE</p>
 
 <p>Im gonna link to <a href="https://openstax.org/books/calculus-volume-1/pages/1-1-review-of-functions"anotehr webpage></a></p>
@@ -32,5 +37,34 @@ This is normal
 
 <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a>.
 
+<!-- Load Facebook SDK for JavaScript -->
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" 
+      src="https://connect.facebook.net/en_US/sdk.js#xfbml=1
+           &version={graph-api-version}
+           &appId={your-facebook-app-id}
+           &autoLogAppEvents=1" 
+      nonce="FOKrbAYI">
+</script>
+
+<!-- Your like button code -->
+<div class="fb-like" 
+     data-href="https://www.your-domain.com/your-page.html" 
+     data-width=""
+     data-layout="standard" 
+     data-action="like" 
+     data-size="small"  
+     data-share="true">
+</div>
+
 </body>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0EXBB1BTEB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-0EXBB1BTEB');
+</script>
 </html>
