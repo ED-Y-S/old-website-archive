@@ -35,5 +35,14 @@
 
             }
             .center {
-                text-align: center;
+                text-align:center;
+            }
+            
+            @font-face {
+                font-family: BookmanIT;
+                src: url(bookmanITCstd-medium.otf);
+                
+            }
+            .font{
+                font-family: BookmanIT
             }
