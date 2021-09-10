@@ -34,6 +34,12 @@
             .center {
                 text-align:center;
             }
+            .centerimg {
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+                width: 40%;
+              }
             .fade{
                 animation: fadeAndScale 1s cubic-bezier(0,1.07,.72,1.42);
                 transform-origin: center bottom;
