@@ -8,6 +8,9 @@ ul li:hover{
     text-align:center;
 
 }
+a{
+    color: black;
+}
 .center {
     text-align:center;
 }
