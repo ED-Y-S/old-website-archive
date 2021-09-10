@@ -43,7 +43,7 @@
             .font{
                 font-family: "Harlow";
             }
-            .fade-in{
+            #fade-in{
                     opacity: 0;
                     font-size: 21px;
                     margin-top: 25px;
