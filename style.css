@@ -1,26 +1,3 @@
-            #li {
-                color: rgb(202, 14, 14);   
-                background-color: white; 
-            }
-            #last_li{
-                color: green;
-            }
-            #only_text{
-                color: orange;
-            }
-            .menu{
-                background-color: Black;
-                color: white;
-            }
-            #ul_li{
-                background-color:rgb(1, 12, 12);
-                color: rgb(250, 248, 248);
-                list-style-type: none;
-                display:inline-block;
-                width:25%;
-                padding: 0px;
-                margin: 0px;
-            }
             ul li:hover{
                 background-color:none;
                 color: red;
