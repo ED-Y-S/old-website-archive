@@ -22,6 +22,10 @@ table, th, td {
     margin-left: auto;
   margin-right: auto;
 }
+.rightside{
+        float: right
+    }
+        
 .centerimg {
     display: block;
     margin-left: auto;
