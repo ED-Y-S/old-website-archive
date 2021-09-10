@@ -9,9 +9,10 @@ ul li:hover{
 
 }
 table, th, td {
-    border: 1px solid black;
+    border: 10px solid black;
   }
-a{
+
+  a{
     color: black;
 }
 .center {
