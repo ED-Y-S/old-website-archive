@@ -11,8 +11,15 @@ ul li:hover{
 table, th, td {
     border: 1.0px solid black;
   }
-
-  a{
+@media only screen and (max-width: 600px) {
+    body {
+        padding: 0px;
+        margin-left:0%;
+        margin-right:30%;
+        color:brown;
+    }
+  }
+a{
     color: black;
 }
 .center {
@@ -21,6 +28,9 @@ table, th, td {
 #center_table{
     margin-left: auto;
   margin-right: auto;
+}
+.inline{
+    display: inline-block;
 }
 .rightside{
         float: right
