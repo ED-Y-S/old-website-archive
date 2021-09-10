@@ -1,6 +1,4 @@
-<hmtl>
-    <head>
-        <style>
+
             li {
                 color: rgb(202, 14, 14);   
                 background-color: white; 
@@ -37,21 +35,3 @@
                 margin: 0px;
 
             }
-        </style>
-    </head>
-    <body>
-        <p><h1>Hello World</h1></p>
-    <p><h1>Book List</h1></p>
-        <ul>
-        <li><a href="https://www.google.com">Slaughter House 5</a></li>
-        <li>Bread And Conquer</li>
-    </ul>
-    <p><h1>Random List</h1></p>
-    <ol>
-        <li><span id=only_text><em>item 1</em></span></li>
-        <li style="color: red;">item 2</li>
-        <li><span style="color: rgb(202, 14, 14);">item 3</span></li>
-        <li id=last_li><span id=only_text>item last</span></li>
-    </ol>
-    </body>
-</hmtl>
