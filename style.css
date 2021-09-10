@@ -10,7 +10,6 @@ ul li:hover{
 }
 table, th, td {
     border: 1.0px solid black;
-    text-align:center
   }
 
   a{
@@ -18,6 +17,10 @@ table, th, td {
 }
 .center {
     text-align:center;
+}
+#center_table{
+    margin-left: auto;
+  margin-right: auto;
 }
 .centerimg {
     display: block;
