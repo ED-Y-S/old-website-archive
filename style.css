@@ -1,4 +1,4 @@
-            li {
+            .li {
                 color: rgb(202, 14, 14);   
                 background-color: white; 
             }
@@ -12,7 +12,7 @@
                 background-color: Black;
                 color: white;
             }
-            ul li{
+            .ul_li{
                 background-color:rgb(1, 12, 12);
                 color: rgb(250, 248, 248);
                 list-style-type: none;
@@ -25,7 +25,6 @@
                 background-color:teal;
                 color: red;
                 list-style-type: none;
-                display:inline-block;
                 width:25%;
                 padding: 0px;
                 margin: 0px;
