@@ -1,4 +1,7 @@
-ul li:hover{
+ul{
+    list-style-type: none；
+}
+ul:hover{
     background-color:rgb(5, 223, 252);
     color: rgb(174, 0, 255);
     list-style-type: none;
