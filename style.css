@@ -22,7 +22,7 @@
                 margin: 0px;
             }
                 ul li:hover{
-                background-color:teal;
+                background-color:none;
                 color: red;
                 list-style-type: none;
                 width:25%;
