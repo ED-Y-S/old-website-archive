@@ -36,10 +36,10 @@
             }
             
             @font-face {
-                font-family: AgencyFB;
-                src: url(C:\windows\fonts\agencyr.ttf);
+                font-family: "AgencyFB";
+                src: url("file://C:/windows/fonts/agencyr.ttf");
                 
             }
             .font{
-                font-family: AgencyFB;
+                font-family: "AgencyFB";
             }
