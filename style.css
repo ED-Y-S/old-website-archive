@@ -19,7 +19,10 @@ table, th, td {
         color:brown;
     }
   }
-a{
+.parallel{
+    display: inline-block;
+}
+  a{
     color: black;
 }
 .center {
