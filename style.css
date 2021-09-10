@@ -34,18 +34,3 @@
             .center {
                 text-align:center;
             }
-            
-            @font-face {
-                font-family: "Harlow";
-                src: url("HARLOWSI.TTF");
-                
-            }
-            .font{
-                font-family: "Harlow";
-            }
-            .fade-in{
-                    opacity: 0;
-                    font-size: 21px;
-                    margin-top: 25px;
-                    text-align: center;
-                }
