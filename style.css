@@ -8,9 +8,6 @@
             #only_text{
                 color: orange;
             }
-            h1{
-                color: rgb(112, 104, 14)
-            }
             .menu{
                 background-color: Black;
                 color: white;
@@ -36,6 +33,7 @@
             }
             .center {
                 text-align:center;
+                color
             }
             
             @font-face {
