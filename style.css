@@ -24,9 +24,7 @@ table, th, td {
         color:brown;
     }
   }
-.parallel{
-    display: inline-block;
-}
+
 a{
     color: black;
 }
@@ -37,8 +35,13 @@ a{
     margin-left: auto;
   margin-right: auto;
 }
-.inline{
+p ul li{
+    list-style-type: none;
     display: inline-block;
+    width: 25%;
+    padding: 0px;
+    margin: 0px;
+    
 }
 .rightside{
         float: right
