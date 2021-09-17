@@ -309,15 +309,15 @@ print(factorial(100))
 print("-------------------------------")
 
 def is_prime(n):
-    if n>0:
-        for i ranged in (2,n):
-            if (n%i) ==0:
-                print("False")
-                break
-        else:
-            print("True")
-    else:
-        print("False")
+    if n == 1:
+        return False
+    if n == 2:
+        return True
+    for i in range(2,n):
+        if (n % i) == 0:
+            return False
+    return True
+
     
     
 print (is_prime(1))
@@ -326,6 +326,7 @@ print (is_prime(3))
 print (is_prime(4))
 print (is_prime(97))
 print (is_prime(99))
+print("-------------------------------")
             
 '''
     Return True if n is prime, and False otherwise.
@@ -349,7 +350,22 @@ print (is_prime(99))
 
 
 def is_perfect_square(n):
-    '''
+    for i in range(0,n+1):
+        if n == i*i:
+            return True
+    return False
+print(is_perfect_square(1))
+print(is_perfect_square(2))
+print(is_perfect_square(4))
+print(is_perfect_square(81))
+print(is_perfect_square(97))
+print(is_perfect_square(0))
+print(is_perfect_square(-144))
+print(is_perfect_square(144))
+print("-------------------------------")
+    
+    
+'''
     Return True if n is is the product of two integers.
     That is, return True if there exists an integer i such that i*i==n.
     HINT: 
@@ -374,7 +390,31 @@ def is_perfect_square(n):
 
 
 def fibonacci(n):
-    '''
+    f0 = 0
+    f1 = 1
+    f2 = 1
+    if n == 0:
+        return f0
+    if n == 1:
+        return f1
+    for i in range (2,n+1):
+        f2= f0+f1
+        f0=f1
+        f1=f2
+    return f2
+print(fibonacci(0))
+print(fibonacci(1))
+print(fibonacci(2))
+print(fibonacci(3))
+print(fibonacci(4))
+print(fibonacci(5))
+print(fibonacci(6))
+print(fibonacci(7))
+print(fibonacci(1000))
+print("-------------------------------")   
+
+
+'''
     Return the nth fibonacci number.
     Recall that the fibonacci numbers are calculated by the following formula:
         fibonacci(0) = 0
