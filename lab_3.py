@@ -1,3 +1,4 @@
+import math
 #!/bin/python
 
 '''
@@ -112,7 +113,15 @@ def sum_of_primes(n):
     >>> sum_of_primes(7)
     17
     '''
-
+    if n == 0:
+        return 0
+    if n == 1:
+        return 0
+    sum = 2
+    for i in range(3,n+1):
+        if is_prime(i) == True:
+            sum += i
+    return sum
 
 def is_prime(n):
     '''
@@ -163,7 +172,12 @@ def last_element(xs):
     1
     >>> last_element([])
     '''
-
+    last_element = 0
+    if len(xs) == 0:
+        return None
+    for x in xs:
+        last_element = xs[-1]
+    return last_element
 
 def last_element_list(xs):
     '''
@@ -179,7 +193,11 @@ def last_element_list(xs):
     >>> last_element_list([])
     []
     '''
-
+    last_element_list = []
+    for x in xs:
+        if x == xs[-1]:
+            last_element_list.append(x)
+    return last_element_list
 
 def first_three(xs):
     '''
@@ -197,7 +215,11 @@ def first_three(xs):
     >>> first_three([])
     []
     '''
-
+    first_three = []
+    for x in xs:
+        if x in xs[:3]:
+            first_three.append(x)
+    return first_three
 
 def last_three(xs):
     '''
@@ -212,6 +234,11 @@ def last_three(xs):
     >>> last_three([0,1])
     [0, 1]
     '''
+    last_three = []
+    for x in xs:
+        if x in xs[-3:]:
+            last_three.append(x)
+    return last_three
 
 
 def filter_even(xs):
@@ -228,7 +255,11 @@ def filter_even(xs):
     >>> filter_even([20,13,4,16,8,19,10])
     [13, 19]
     '''
-
+    filter_even = []
+    for x in xs:
+        if x%2 != 0:
+            filter_even.append(x)
+    return filter_even
 
 def bigger_than_10(xs):
     '''
@@ -242,7 +273,11 @@ def bigger_than_10(xs):
     >>> bigger_than_10([4,5,6,11])
     1
     '''
-
+    bigger_than_10 = 0 
+    for x in xs:
+        if x > 10:
+            bigger_than_10 += 1
+    return bigger_than_10
 
 def second_largest(xs):
     '''
@@ -259,6 +294,14 @@ def second_largest(xs):
     >>> second_largest([10])
     >>> second_largest([])
     '''
+    second_largest = 0
+    xs.sort()
+    if len(xs) <= 1:
+        return None
+    for x in xs:
+        x = xs[-2]
+        second_largest = x
+    return second_largest
 
 
 def has_index_at_value(xs):
@@ -287,7 +330,22 @@ def has_index_at_value(xs):
     >>> has_index_at_value([2, 9, 5, 4, 19, 4, 4, 4, 4, 4])
     False
     '''
+    for i in range(len(xs)):
+            x = xs[i]
+            if x == i:
+                return True
+    return False
+print(has_index_at_value([0]))
+print(has_index_at_value([1]))
+print(has_index_at_value([1,1]))
+print(has_index_at_value([1,0]))
+print(has_index_at_value([0,0]))
+print(has_index_at_value([7,3,2,8]))
+print(has_index_at_value([2, 9, 5, 6, 19, 6, 6, 6, 6, 6]))
+print(has_index_at_value([2, 9, 5, 4, 19, 4, 4, 4, 4, 4]))
 
+        
+            
 
 def flatten(xss):
     '''
@@ -301,6 +359,11 @@ def flatten(xss):
     >>> flatten([[10]])
     [10]
     '''
+    flatten = []
+    for xs in xss:
+        for x in xs:
+            flatten.append(x)
+    return flatten
 
 
 def filter_flatten(xss):
@@ -323,6 +386,16 @@ def filter_flatten(xss):
     >>> filter_flatten([[10]])
     [10]
     '''
+    filter_flatten = []
+    for i in range(len(xss)):
+        xs = xss[i]
+        x = xs[i]
+        filter_flatten.append(x)
+    return filter_flatten
+
+
+
+    
 
 
 ################################################################################
@@ -377,6 +450,7 @@ def get_number_of_students_in_class(d):
     >>> get_number_of_students_in_class(economics_grades)
     6
     '''
+    return len(d.keys())
 
 
 def highest_grade(d):
@@ -389,6 +463,13 @@ def highest_grade(d):
     >>> highest_grade(economics_grades)
     95
     '''
+    highest_grade = 0
+    for key in d:
+        grade = d[key]
+        if grade > highest_grade:
+            highest_grade = grade
+    return highest_grade
+
 
 
 def student_with_highest_grade(d):
@@ -401,6 +482,15 @@ def student_with_highest_grade(d):
     >>> student_with_highest_grade(economics_grades)
     'pierre-joseph proudhon'
     '''
+    highest_grade = 0
+    highest_index = None
+    for key in d:
+        grade = d[key]
+        if grade > highest_grade:
+            highest_grade = grade
+            highest_index = key
+    return highest_index
+
 
 
 def students_getting_an_a(d):
@@ -416,7 +506,14 @@ def students_getting_an_a(d):
     >>> students_getting_an_a(economics_grades)
     ['alan greenspan', 'karl marx', 'pierre-joseph proudhon']
     '''
-
+    
+    a_student = []
+    for key in d:
+        grade = d[key]
+        if grade >= 90:
+            a_student.append(key)
+    a_student.sort()
+    return a_student
 
 ################################################################################
 # PART IV:
@@ -502,3 +599,15 @@ def most_retweeted(tweets):
     >>> most_retweeted(trump_tweets[:5])
     '947592785519173637'
     '''
+    retweets = 0
+    one_tweet = None
+    for i in range(len(tweets)):
+        one_tweet = tweets[i]
+        for id_str in one_tweet:
+            tweet_id = one_tweet[id_str]
+        for retweet_count in one_tweet:
+            retweet_amount = one_tweet[retweet_count]
+            if retweet_count > retweets:
+                retweets = retweet_count
+                tweet_id = id_str
+    return tweet_id
