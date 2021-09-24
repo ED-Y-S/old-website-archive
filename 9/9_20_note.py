@@ -12,8 +12,7 @@ def largest(xs):
     >>> largest([10])
     10
     >>> largest([])
-    '''
-print(2**2*2//3-4+2)    
+    '''    
             
 
 def filter_odd(xs):
