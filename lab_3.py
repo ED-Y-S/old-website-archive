@@ -335,14 +335,7 @@ def has_index_at_value(xs):
             if x == i:
                 return True
     return False
-print(has_index_at_value([0]))
-print(has_index_at_value([1]))
-print(has_index_at_value([1,1]))
-print(has_index_at_value([1,0]))
-print(has_index_at_value([0,0]))
-print(has_index_at_value([7,3,2,8]))
-print(has_index_at_value([2, 9, 5, 6, 19, 6, 6, 6, 6, 6]))
-print(has_index_at_value([2, 9, 5, 4, 19, 4, 4, 4, 4, 4]))
+
 
         
             
