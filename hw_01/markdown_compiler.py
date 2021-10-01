@@ -49,16 +49,19 @@ def compile_headers(line):
     >>> compile_headers('      # this is not a header')
     '      # this is not a header'
     '''
-    converted = ''
-    html_tag = 'hx'
-    line.split()
-    for i in len(line.split[0]):
-        html_tag.replace('x', i+1)
-    for x in line:
-        html_tag == line[0]
-        line[-1] == html_tag[0] + '/'
-        converted == line
-    return converted
+    if line[0:6] == '######' : #order: from the longst to the shortest
+        line = '<h6>' + line[6:] + '</h6>'
+    if line[0:5] == '#####' : #order: from the longst to the shortest
+        line = '<h5>' + line[5:] + '</h5>'
+    if line[0:4] == '####' : #order: from the longst to the shortest
+        line = '<h4>' + line[4:] + '</h4>'
+    if line[0:3] == '###' : #order: from the longst to the shortest
+        line = '<h3>' + line[3:] + '</h3>'
+    if line[0:2] == '##' : #order: from the longst to the shortest
+        line = '<h2>' + line[2:] + '</h2>'
+    if line[0] == '#':
+        line = '<h1>' + line[1:] + '</h1>'
+    return line
     
 
 
@@ -84,7 +87,23 @@ def compile_italic_star(line):
     >>> compile_italic_star('*')
     '*'
     '''
+    #1.positions of the stars
+    #2.use th position to create new string
+
+    start_index = None
+    end_index = None
+    for i in range(len(line)):
+        if line[i] == '*':
+            if start_index is None:
+                start_index = i
+            else:
+                end_index = i
+    if start_index is not None and end_index is not None:
+        line = line[:start_index] + '<i>' + line [start_index+1:end_index] + '</i>'+ line[end_index+1:]
     return line
+
+
+    
 
 
 def compile_italic_underscore(line):
