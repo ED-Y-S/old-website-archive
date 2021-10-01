@@ -117,8 +117,8 @@ def sum_of_primes(n):
         return 0
     if n == 1:
         return 0
-    sum = 2
-    for i in range(3,n+1):
+    sum = 0
+    for i in range(2,n+1):
         if is_prime(i) == True:
             sum += i
     return sum
@@ -201,7 +201,7 @@ def last_element_list(xs):
 
 def first_three(xs):
     '''
-    Return a list containing the last three elements of the input list.
+    Return a list containing the first three elements of the input list.
     Of the list contains three or fewer elements,
     then return the entire list.
     HINT:
@@ -294,8 +294,8 @@ def second_largest(xs):
     >>> second_largest([10])
     >>> second_largest([])
     '''
-    second_largest = 0
     xs.sort()
+    second_largest = 0
     if len(xs) <= 1:
         return None
     for x in xs:
@@ -592,15 +592,10 @@ def most_retweeted(tweets):
     >>> most_retweeted(trump_tweets[:5])
     '947592785519173637'
     '''
-    retweets = 0
-    one_tweet = None
+    max_retweets = 0
     for i in range(len(tweets)):
-        one_tweet = tweets[i]
-        for id_str in one_tweet:
-            tweet_id = one_tweet[id_str]
-        for retweet_count in one_tweet:
-            retweet_amount = one_tweet[retweet_count]
-            if retweet_count > retweets:
-                retweets = retweet_count
-                tweet_id = id_str
+        tweet = tweets[i]
+        if tweet["retweet_count"] > max_retweets:
+            max_retweets = tweet["retweet_count"]
+            tweet_id = tweet["id_str"]
     return tweet_id
