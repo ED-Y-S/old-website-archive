@@ -27,8 +27,8 @@ def delete_HTML(text):
             new_text += text[i]
     return new_text
 
-'''
+    '''
 next_text = ''
 lessthans= text.split('<')
 for lessthan in lessthans
-'''
+    '''

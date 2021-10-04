@@ -122,20 +122,17 @@ def compile_italic_underscore(line):
     >>> compile_italic_underscore('_')
     '_'
     '''
-    new_text= ''
-    tag = False
+    start_index = None
+    end_index = None
     for i in range(len(line)):
-        if line == '_':
-            return '_'
-        if line[i]=='_':
-            tag = True
-        elif line[i] == '_':
-            tag = False
-        elif tag == True:
-            new_text = line.replace(line[i],'<i>')
-        if tag == False:
-            new_text = line
-    return new_text
+        if line[i] == '_':
+            if start_index is None:
+                start_index = i
+            else:
+                end_index = i
+    if start_index is not None and end_index is not None:
+        line = line[:start_index] + '<i>' + line [start_index+1:end_index] + '</i>'+ line[end_index+1:]
+    return line
 
 
 def compile_strikethrough(line):
@@ -156,6 +153,24 @@ def compile_strikethrough(line):
     >>> compile_strikethrough('~~')
     '~~'
     '''
+    start_index = None
+    start_index_2 = None
+    end_index = None
+    end_index_2 = None
+    for i in range(len(line)):
+        if line == '~~':
+            return '~~'
+        if line[0:2] == '~~' and line [-2:] == '~~':
+            line = '<ins>' + line[2:-2] + '</ins>'
+        if line[i] == '~' and line[i+1] == '~':
+            if start_index is None and start_index_2 is None:
+                start_index = i
+                start_index_2 = i+1
+            else:
+                end_index = i 
+                end_index_2 = i+1
+    if start_index is not None and start_index_2 is not None and end_index is not None and end_index_2 is not None:
+        line = line[:start_index] + '<ins>' + line [start_index_2+1:end_index] + '</ins>'+ line[end_index_2+1:]
     return line
 
 
@@ -175,6 +190,24 @@ def compile_bold_stars(line):
     >>> compile_bold_stars('**')
     '**'
     '''
+    start_index = None
+    start_index_2 = None
+    end_index = None
+    end_index_2 = None
+    for i in range(len(line)):
+        if line == '**':
+            return '**'
+        if line[0:2] == '**' and line [-2:] == '**':
+            line = '<b>' + line[2:-2] + '</b>'
+        if line[i] == '*' and line[i+1] == '*':
+            if start_index is None and start_index_2 is None:
+                start_index = i
+                start_index_2 = i+1
+            else:
+                end_index = i 
+                end_index_2 = i+1
+    if start_index is not None and start_index_2 is not None and end_index is not None and end_index_2 is not None:
+        line = line[:start_index] + '<b>' + line [start_index_2+1:end_index] + '</b>'+ line[end_index_2+1:]
     return line
 
 
@@ -194,6 +227,24 @@ def compile_bold_underscore(line):
     >>> compile_bold_underscore('__')
     '__'
     '''
+    start_index = None
+    start_index_2 = None
+    end_index = None
+    end_index_2 = None
+    for i in range(len(line)):
+        if line == '__':
+            return '__'
+        if line[0:2] == '__' and line [-2:] == '__':
+            line = '<b>' + line[2:-2] + '</b>'
+        if line[i] == '_' and line[i+1] == '_':
+            if start_index is None and start_index_2 is None:
+                start_index = i
+                start_index_2 = i+1
+            else:
+                end_index = i 
+                end_index_2 = i+1
+    if start_index is not None and start_index_2 is not None and end_index is not None and end_index_2 is not None:
+        line = line[:start_index] + '<b>' + line [start_index_2+1:end_index] + '</b>'+ line[end_index_2+1:]
     return line
 
 
@@ -468,6 +519,9 @@ def minify(html):
     >>> minify('a\n\n\n\n\n\n\n\n\n\n\n\n\n\nb\n\n\n\n\n\n\n\n\n\n')
     'a b'
     '''
+    string = html
+    t = string.split()
+    html = ' '.join(t)
     return html
 
 
