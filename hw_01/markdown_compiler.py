@@ -271,6 +271,23 @@ def compile_code_inline(line):
     >>> compile_code_inline('```python3')
     '```python3'
     '''
+    start_index = None
+    end_index = None
+    s1 = line.split('>')
+    t1 = '&gt;'.join(s1)
+    s2 = t1.split('<')
+    t2 = '&lt;'.join(s2)
+    for i in range(len(t2)):
+        if t2[i:i+3] == '```':
+            return line
+        if t2[i] == '`':
+            if start_index is None:
+                start_index = i
+            else:
+                end_index = i
+    
+    if start_index is not None and end_index is not None:
+        line = t2[:start_index] + '<code>' + t2 [start_index+1:end_index]+'</code>'+ line[end_index+1:]
     return line
 
 
@@ -289,6 +306,28 @@ def compile_links(line):
     >>> compile_links('this is wrong: [course webpage](https://github.com/mikeizbicki/cmc-csci040')
     'this is wrong: [course webpage](https://github.com/mikeizbicki/cmc-csci040'
     '''
+    start_index_bracket = None
+    end_index_bracket = None
+    start_index_parentheses = None
+    end_index_parentheses = None
+    for i in range(len(line)):
+        if line[i] == '[':
+            if start_index_bracket is None:
+                start_index_bracket = i
+        if line[i] == ']':
+            if end_index_bracket is None:
+                end_index_bracket = i
+        if line[i] == '(':
+            if start_index_parentheses is None:
+                start_index_parentheses = i
+        if line[i] == ')':
+            if end_index_parentheses is None:
+                end_index_parentheses = i
+    if end_index_parentheses is not None and start_index_bracket is not None:
+        if line[end_index_bracket+1] == ' ':
+            return line
+    if start_index_bracket is not None and start_index_parentheses is not None and end_index_bracket is not None and end_index_parentheses is not None:
+        line = line[:start_index_bracket] + '<a href="' + line [start_index_parentheses+1:end_index_parentheses] + '">'+ line[start_index_bracket+1:end_index_bracket]+ '</a>'+ line[end_index_parentheses+1:]
     return line
 
 
@@ -306,6 +345,30 @@ def compile_images(line):
     >>> compile_images('This is an image of Mike Izbicki: ![Mike Izbicki](https://avatars1.githubusercontent.com/u/1052630?v=2&s=460)')
     'This is an image of Mike Izbicki: <img src="https://avatars1.githubusercontent.com/u/1052630?v=2&s=460" alt="Mike Izbicki" />'
     '''
+    start_index_bracket = None
+    end_index_bracket = None
+    start_index_parentheses = None
+    end_index_parentheses = None
+    exclamation = None
+    for i in range(len(line)):
+        if line [i] == '!':
+            exclamation = i
+        if line[i] == '[':
+            if start_index_bracket is None:
+                start_index_bracket = i
+        if line[i] == ']':
+            if end_index_bracket is None:
+                end_index_bracket = i
+        if line[i] == '(':
+            if start_index_parentheses is None:
+                start_index_parentheses = i
+        if line[i] == ')':
+            if end_index_parentheses is None:
+                end_index_parentheses = i
+    if exclamation is None:
+        return line
+    if start_index_bracket is not None and start_index_parentheses is not None and end_index_bracket is not None and end_index_parentheses is not None:
+        line = line[:exclamation] + '<img src="' + line [start_index_parentheses+1:end_index_parentheses] + '" '+ 'alt="' + line[start_index_bracket+1:end_index_bracket]+ '" />'+ line[end_index_parentheses+1:]
     return line
 
 
