@@ -42,7 +42,7 @@ empty = '​​​​​​​​​​​​​​​​​​​​​​​�
 ###############################################################################
 
 # Background:
-# - a "grapheme" is what Unicode calls an individual "unit" of text being displayed; one image per grapheme
+# - a "grapheme" is what Unicode calls an individual "unit" of text being displayed; one image per grapheme;
 #   it's what most people would call a "letter"/"symbol"/"character"
 # - a "font" is a set of pictures associated with each grapheme
 
