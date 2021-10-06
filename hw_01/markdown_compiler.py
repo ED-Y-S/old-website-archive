@@ -199,7 +199,7 @@ def compile_bold_stars(line):
             return '**'
         if line[0:2] == '**' and line [-2:] == '**':
             line = '<b>' + line[2:-2] + '</b>'
-        if line[i] == '*' and line[i+1] == '*':
+        if line[i-1] == '*' and line[i] == '*':
             if start_index is None and start_index_2 is None:
                 start_index = i
                 start_index_2 = i+1
@@ -207,7 +207,7 @@ def compile_bold_stars(line):
                 end_index = i 
                 end_index_2 = i+1
     if start_index is not None and start_index_2 is not None and end_index is not None and end_index_2 is not None:
-        line = line[:start_index] + '<b>' + line [start_index_2+1:end_index] + '</b>'+ line[end_index_2+1:]
+        line = line[:start_index-1] + '<b>' + line [start_index_2:end_index-1] + '</b>'+ line[end_index_2:]
     return line
 
 
@@ -236,7 +236,7 @@ def compile_bold_underscore(line):
             return '__'
         if line[0:2] == '__' and line [-2:] == '__':
             line = '<b>' + line[2:-2] + '</b>'
-        if line[i] == '_' and line[i+1] == '_':
+        if line[i-1] == '_' and line[i] == '_':
             if start_index is None and start_index_2 is None:
                 start_index = i
                 start_index_2 = i+1
@@ -244,7 +244,7 @@ def compile_bold_underscore(line):
                 end_index = i 
                 end_index_2 = i+1
     if start_index is not None and start_index_2 is not None and end_index is not None and end_index_2 is not None:
-        line = line[:start_index] + '<b>' + line [start_index_2+1:end_index] + '</b>'+ line[end_index_2+1:]
+        line = line[:start_index-1] + '<b>' + line [start_index_2:end_index-1] + '</b>'+ line[end_index_2:]
     return line
 
 
@@ -273,21 +273,22 @@ def compile_code_inline(line):
     '''
     start_index = None
     end_index = None
-    s1 = line.split('>')
-    t1 = '&gt;'.join(s1)
-    s2 = t1.split('<')
-    t2 = '&lt;'.join(s2)
-    for i in range(len(t2)):
-        if t2[i:i+3] == '```':
+    for i in range(len(line)):
+        if line[i:i+3] == '```':
             return line
-        if t2[i] == '`':
+        if line[i] == '`':
             if start_index is None:
                 start_index = i
             else:
                 end_index = i
-    
+
     if start_index is not None and end_index is not None:
-        line = t2[:start_index] + '<code>' + t2 [start_index+1:end_index]+'</code>'+ line[end_index+1:]
+        mid = line[start_index+1:end_index]
+        s1 = mid.split('>')
+        t1 = '&gt;'.join(s1)
+        s2 = t1.split('<')
+        t2 = '&lt;'.join(s2)
+        line = line[:start_index] + '<code>' + t2 +'</code>'+ line[end_index+1:]
     return line
 
 
@@ -427,6 +428,7 @@ def compile_lines(text):
     <p>
     <code>paragraph3</code>
     </p>
+    
     NOTE:
     This second set of test cases tests multiline code blocks.
     HINT:
@@ -495,25 +497,33 @@ def compile_lines(text):
     lines = text.split('\n')
     new_lines = []
     in_paragraph = False
+    in_code = False
     for line in lines:
-        line = line.strip()
-        if line=='':
+        if line == '```':
+            if in_code == True: # if in_code: equals to if in_code == True:
+                line = '</pre>'
+                in_code = False
+            elif in_code == False and line == '```':
+                in_code = True
+                line = '<pre>'
+        elif line=='':
             if in_paragraph:
                 line='</p>'
                 in_paragraph = False
         else:
-            if line[0] != '#' and not in_paragraph:
+            if line[0] != '#' and not in_paragraph and not in_code:
                 in_paragraph = True
                 line = '<p>\n'+line
-            line = compile_headers(line)
-            line = compile_strikethrough(line)
-            line = compile_bold_stars(line)
-            line = compile_bold_underscore(line)
-            line = compile_italic_star(line)
-            line = compile_italic_underscore(line)
-            line = compile_code_inline(line)
-            line = compile_images(line)
-            line = compile_links(line)
+            if in_code == False:
+                line = compile_headers(line)
+                line = compile_strikethrough(line)
+                line = compile_bold_stars(line)
+                line = compile_bold_underscore(line)
+                line = compile_italic_star(line)
+                line = compile_italic_underscore(line)
+                line = compile_code_inline(line)
+                line = compile_images(line)
+                line = compile_links(line)
         new_lines.append(line)
     new_text = '\n'.join(new_lines)
     return new_text
