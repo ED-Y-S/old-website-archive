@@ -28,7 +28,7 @@ def rot13(text):
     do your math on that number;
     then use `chr` to convert bach to a string.
 
-    >>> rot13('python is awesome')
+    >>> rot13('python is awesome')  
     'clguba vf njrfbzr'
     >>> rot13('clguba vf njrfbzr')
     'python is awesome'
@@ -48,9 +48,30 @@ def rot13(text):
     You know something is a capital letter because it is >= 'A' and <= 'Z';
     similarly, you know something is a lowercase letter because it is >= 'a' and <= 'z'.
     '''
-    
-    
-
+    new_text = ''
+    for x in text:
+        y = ord(x)
+        if 65<=y and y<=90 : 
+            if (y-13) < 65:
+                y = 90-(13-(y-64))
+                new_char = chr(y)
+                new_text += new_char
+            else:
+                y = y-13
+                new_char = chr(y)
+                new_text += new_char
+        if 97<=y and y<=122:
+            if (y-13) < 97:
+                y = 122-(13-(y-96))
+                new_char = chr(y)
+                new_text += new_char
+            else:
+                y = y-13
+                new_char = chr(y)
+                new_text += new_char
+        if x.isalpha() == False:
+            new_text += x
+    return new_text
 
 def greekify(text):
     '''
@@ -84,7 +105,22 @@ def greekify(text):
     '''
     greek_alphabet = 'ΑαΒβΓγΔδΕεΖζΗηΘθΙιΚκΛλΜμΝνΞξΟοΠπΡρΣσςΤτΥυΦφΧχΨψΩω'
     latin_alphabet = 'AaBbGgDdEeZzHhJjIiKkLlMmNnXxOoPpRrSssTtUuFfQqYyWw'
+    text_accumulator = ''
+    for i in range(len(text)):
+        x = text[i]
+        l = latin_alphabet.find(x)
+        g = greek_alphabet.find(x)
 
+        if l == -1 and g == -1:
+            text_accumulator+= x
+        elif l == -1 and g>=0:
+            l = latin_alphabet[g]
+            text_accumulator += l
+        else:
+            g = greek_alphabet[l]
+            text_accumulator += g
+        
+    return text_accumulator
 
 def character_equality(x, y):
     '''
@@ -103,7 +139,10 @@ def character_equality(x, y):
     >>> character_equality('lập trình máy tính là tốt nhất !!!', 'lập trình máy tính là tốt nhất !!!')
     False
     '''
-
+    if x == y:
+        return True
+    else:
+        return False
 
 def grapheme_equality(x, y):
     '''
@@ -122,3 +161,10 @@ def grapheme_equality(x, y):
     >>> grapheme_equality('lập trình máy tính là tốt nhất !!!', 'lập trình máy tính là tốt nhất !!!')
     True
     '''
+    import unicodedata
+    x_1 = unicodedata.normalize('NFC', x)
+    y_1 = unicodedata.normalize('NFC', y)
+    if x_1 == y_1:
+        return True
+    else:
+        return False
