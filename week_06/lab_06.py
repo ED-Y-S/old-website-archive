@@ -28,13 +28,13 @@ You'll know your program is correct if you get the same numbers.
 '''
 
 import glob
-import json, os
+import json
 len_tweets = []
 # we need both the json and an index number so use enumerate()
 files = glob.glob('trump_tweets/*')
 for file in files:
-    with open(file, 'r', encoding = 'ASCII') as c:
-        tweets = c.read()
+    with open(file, 'r', encoding = 'ASCII') as d:
+        tweets = d.read()
         len_tweets += json.loads(tweets)
 
 num_obama = 0
@@ -63,17 +63,25 @@ for tweet in len_tweets:
         num_chicago += 1
     if lower_tweets.find('russia') != -1:
         num_russia += 1
-percentage_obama = round((num_obama / len(len_tweets) * 100), 2)
-percentage_trump = round((num_trump / len(len_tweets) * 100), 2)
-percentage_mexico = round((num_mexico / len(len_tweets) * 100), 2)
-percentage_russia = round((num_russia / len(len_tweets) * 100), 2)
-percentage_fake_news = round((num_fake_news / len(len_tweets) * 100), 2)
-percentage_radical_left = round((num_radical_left / len(len_tweets) * 100), 2)
-percentage_china = round((num_china / len(len_tweets) * 100), 2)
-percentage_chicago = round((num_chicago / len(len_tweets) * 100), 2)
-dis = "Percentage of tweets using word: \n{Obama:>3} {8:>3} {0} \nTrump {8} {1} \nMexico {8} {2} \nRussia {8} {3} \nFake News {8} {4} \nRadical Left {8} {5} \nChina {8} {6} \nChicago {8} {7}".format(percentage_obama, percentage_trump,percentage_mexico, percentage_russia, percentage_fake_news, percentage_radical_left, percentage_china, percentage_chicago, ':','Obama', 'Trump', 'Mexico', 'Russia', 'Fake News', 'Radical Left', 'China', 'Chicago')
+percentage_obama = str(round((num_obama / len(len_tweets) * 100), 2))
+percentage_obama_4d = percentage_obama.zfill(5)
+percentage_trump = str(round((num_trump / len(len_tweets) * 100), 2))
+percentage_trump_4d = percentage_trump.zfill(5)
+percentage_mexico = str(round((num_mexico / len(len_tweets) * 100), 2))
+percentage_mexico_4d = percentage_mexico.zfill(5)
+percentage_russia = str(round((num_russia / len(len_tweets) * 100), 2))
+percentage_russia_4d = percentage_russia.zfill(5)
+percentage_fake_news = str(round((num_fake_news / len(len_tweets) * 100),2))
+percentage_fake_news_4d = percentage_fake_news.zfill(5)
+percentage_radical_left = str(round((num_radical_left / len(len_tweets) * 100), 2))
+percentage_radical_left_4d = percentage_radical_left.zfill(5)
+percentage_china = str(round((num_china / len(len_tweets) * 100), 2))
+percentage_china_4d = percentage_china.zfill(5)
+percentage_chicago = str(round((num_chicago / len(len_tweets) * 100), 2))
+percentage_chicago_4d = percentage_chicago.zfill(5)
+dis = "\tPercentage of tweets using word: \n\t       Obama {8} {0} \n\t       Trump {8} {1} \n\t      Mexico {8} {2} \n\t      Russia {8} {3} \n\t   Fake News {8} {4} \n\tRadical Left {8} {5} \n\t       China {8} {6} \n\t     Chicago {8} {7}".format(percentage_obama_4d, percentage_trump_4d,percentage_mexico_4d, percentage_russia_4d, percentage_fake_news_4d, percentage_radical_left_4d, percentage_china_4d, percentage_chicago_4d, ':','Obama', 'Trump', 'Mexico', 'Russia', 'Fake News', 'Radical Left', 'China', 'Chicago')
 print('len(tweets)=',len(len_tweets))
-print('counts= {''\'trump\':', num_trump, ',' '\'russia\':', num_russia,',' '\'obama\':', num_obama,',' '\'fake news\':', num_fake_news,',' '\'mexico\':', num_mexico,'}')
+print('counts= {''\'trump\': ', num_trump,', ' '\'russia\': ', num_russia,', ' '\'obama\': ', num_obama,', ' '\'fake news\': ', num_fake_news,', ' '\'mexico\': ', num_mexico,'}', sep='')
 
 print(dis)
 
