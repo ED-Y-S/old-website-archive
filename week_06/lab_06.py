@@ -25,6 +25,51 @@ My program gives the following output:
     len(tweets)= 36307
     counts= {'trump': 13924, 'russia': 412, 'obama': 2712, 'fake news': 333, 'mexico': 199}
 You'll know your program is correct if you get the same numbers.
+'''
+
+import glob
+import json, os
+len_tweets = []
+# we need both the json and an index number so use enumerate()
+files = glob.glob('trump_tweets/*')
+for file in files:
+    with open(file, 'r', encoding = 'ASCII') as c:
+        tweets = c.read()
+        len_tweets += json.loads(tweets)
+
+num_obama = 0
+num_mexico = 0
+num_fake_news= 0
+num_russia = 0
+num_trump = 0
+for tweet in len_tweets:
+    lower_tweets = tweet['text'].lower()
+    if lower_tweets.find('trump') != -1:
+        num_trump += 1
+    if lower_tweets.find('mexico') != -1:
+        num_mexico += 1
+    if lower_tweets.find('fake news') != -1:
+        num_fake_news += 1
+    if lower_tweets.find('obama') != -1:
+        num_obama += 1
+    if lower_tweets.find('russia') != -1:
+        num_russia += 1
+percentage_obama = 0.0000
+percentage_trump = 0.0000
+percentage_mexico = 0.0000
+percentage_russia = 0.0000
+percentage_fake_news = 0.0000
+percentage_BLM = 0.0000
+percentage_china = 0.0000
+percentage_chicago = 0.0000
+
+print('len(tweets)=',len(len_tweets))
+print('counts= {''\'trump\':', num_trump, ',' '\'russia\':', num_russia,',' '\'obama\':', num_obama,',' '\'fake news\':', num_fake_news,',' '\'mexico\':', num_mexico,'}')
+
+
+
+
+'''
 ========================================
 EXTRA CREDIT:
 You may earn 2 points of extra credit on this lab if you also:
