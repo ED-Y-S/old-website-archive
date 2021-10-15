@@ -42,6 +42,9 @@ num_mexico = 0
 num_fake_news= 0
 num_russia = 0
 num_trump = 0
+num_radical_left = 0
+num_chicago = 0
+num_china = 0
 for tweet in len_tweets:
     lower_tweets = tweet['text'].lower()
     if lower_tweets.find('trump') != -1:
@@ -52,21 +55,27 @@ for tweet in len_tweets:
         num_fake_news += 1
     if lower_tweets.find('obama') != -1:
         num_obama += 1
+    if lower_tweets.find('china') != -1:
+        num_china += 1
+    if lower_tweets.find('radical left') != -1:
+        num_radical_left += 1
+    if lower_tweets.find('chicago') != -1:
+        num_chicago += 1
     if lower_tweets.find('russia') != -1:
         num_russia += 1
-percentage_obama = 0.0000
-percentage_trump = 0.0000
-percentage_mexico = 0.0000
-percentage_russia = 0.0000
-percentage_fake_news = 0.0000
-percentage_BLM = 0.0000
-percentage_china = 0.0000
-percentage_chicago = 0.0000
-
+percentage_obama = round((num_obama / len(len_tweets) * 100), 2)
+percentage_trump = round((num_trump / len(len_tweets) * 100), 2)
+percentage_mexico = round((num_mexico / len(len_tweets) * 100), 2)
+percentage_russia = round((num_russia / len(len_tweets) * 100), 2)
+percentage_fake_news = round((num_fake_news / len(len_tweets) * 100), 2)
+percentage_radical_left = round((num_radical_left / len(len_tweets) * 100), 2)
+percentage_china = round((num_china / len(len_tweets) * 100), 2)
+percentage_chicago = round((num_chicago / len(len_tweets) * 100), 2)
+dis = "Percentage of tweets using word: \n{Obama:>3} {8:>3} {0} \nTrump {8} {1} \nMexico {8} {2} \nRussia {8} {3} \nFake News {8} {4} \nRadical Left {8} {5} \nChina {8} {6} \nChicago {8} {7}".format(percentage_obama, percentage_trump,percentage_mexico, percentage_russia, percentage_fake_news, percentage_radical_left, percentage_china, percentage_chicago, ':','Obama', 'Trump', 'Mexico', 'Russia', 'Fake News', 'Radical Left', 'China', 'Chicago')
 print('len(tweets)=',len(len_tweets))
 print('counts= {''\'trump\':', num_trump, ',' '\'russia\':', num_russia,',' '\'obama\':', num_obama,',' '\'fake news\':', num_fake_news,',' '\'mexico\':', num_mexico,'}')
 
-
+print(dis)
 
 
 '''
