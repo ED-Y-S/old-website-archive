@@ -20,6 +20,17 @@ def parse_items_sold(text):
         return int(numbers)
     else:
         return 0
+def parse_shipping(text):
+    numbers = ''
+    for char in text:
+        if char in '1234567890':
+            numbers += char
+    if '$' in text:
+        numbers = '$'+ str(float(numbers)/100)
+        return numbers
+    elif 'Free' in text:
+        numbers = '$'+ str(0)
+        return numbers
 
 # this if ststaement syas only run if the def runs correctly
 if __name__ == '__main__':
@@ -69,20 +80,27 @@ if __name__ == '__main__':
                 print("tags.text =", tag.text)
             
             
-            freereturns = False
+            free_returns = False
             tags_freereturns = tag_item.select('.s-item__free-returns')
             for tag in tags_freereturns:
-                freereturns = True
+                free_returns = True
             
             items_sold = None
             tags_items_sold = tag_item.select('.s-item__hotness')
             for tag in tags_items_sold:
                 items_sold = parse_items_sold(tag.text)
+            
+            shipping = None
+            tags_shipping = tag_item.select('.s-item__shipping')
+            for tag in tags_shipping:
+                shipping = parse_shipping(tag.text)
+
 
             item = {
                 'name': name,
-                'freereturns': freereturns,
+                'free_returns': free_returns,
                 'items_sold': items_sold,
+                'shipping': shipping
             }
             
             items.append(item)
@@ -91,3 +109,5 @@ if __name__ == '__main__':
                 print('item =', item)
 
     filename = args.search_terms + ".json"
+    with open(filename,'w') as f:
+        json.dump(items, f)
