@@ -2,6 +2,7 @@ import argparse
 from bs4 import BeautifulSoup
 import requests
 import json
+import csv
 
 def parse_items_sold(text): # creating the function that filters for only the amount sold
     '''
@@ -52,6 +53,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Download information from ebay and convert to json')
     parser.add_argument('search_term')
     parser.add_argument('--page_number', default = 10)
+    parser.add_argument('--csv')
     args = parser.parse_args()
     print ('args.search_terms =', args.search_term)
 
@@ -129,8 +131,16 @@ if __name__ == '__main__':
             
             for item in items:
                 print('item =', item)
-    
-    filename = args.search_term + '.json' # creare json file from the search term
-    with open(filename,'w') as f:
-        json.dump(items, f)    
+    if args.csv:
+        item_list = ['name', 'price', 'status', 'shipping', 'free_returns', 'items_sold']
+        filename = args.search_term + '.csv' # create CSV file from the search term
+        with open(filename,'w', encoding='UTF8', newline = '') as f:
+            writer = csv.DictWriter(f,item_list)
+            writer.writeheader(item_list)
+            writer.writerows(items)
+    else:
+        filename = args.search_term + '.json' # create json file from the search term
+        with open(filename,'w') as f:
+            json.dump(items, f)
+            
     
