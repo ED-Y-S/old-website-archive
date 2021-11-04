@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 import requests
 import json
 
-def parse_items_sold(text):
+def parse_items_sold(text): # creating the function that filters for only the amount sold
     '''
     >>> parse_items_sold('38 sold')
     38
@@ -20,24 +20,35 @@ def parse_items_sold(text):
         return int(numbers)
     else:
         return 0
-def parse_shipping(text):
+def parse_shipping(text): # creating the function that filters for only the price of shipping
     numbers = ''
     for char in text:
         if char in '1234567890':
             numbers += char
     if '$' in text:
-        numbers = '$'+ str(float(numbers)/100)
+        numbers = '$'+ str(int(numbers)/100)
         return numbers
     elif 'Free' in text:
         numbers = '$'+ str(0)
         return numbers
-
+def parse_price(text): # creating the function that filters for only the price of the good
+    numbers = ''
+    for char in text:
+        if char in '1234567890':
+            numbers += char
+    if '$' in text:
+        numbers = '$'+ str(int(numbers)/100)
+        return numbers
+def parse_status(text): # creating the function that filters for the quality status of the good
+    t = ''
+    for char in text:
+        t += char
+    return t
 # this if ststaement syas only run if the def runs correctly
 if __name__ == '__main__':
+    
+
     # get command line arguments
-    # 
-
-
     parser = argparse.ArgumentParser(description='Download information from ebay and convert to json')
     parser.add_argument('search_term')
     parser.add_argument('--page_number', default = 10)
@@ -63,17 +74,16 @@ if __name__ == '__main__':
         
         # download the html strings
         html = r.text
-        # print('html =', html[:50])
+        
 
         # "process" the html
-
         soup = BeautifulSoup(html, 'html.parser')
         tag_items = soup.select('.s-item')
         for tag_item in tag_items:
             # print('tag_items =', tag_items)
 
             
-            tag_names = tag_item.select('.s-item__title')
+            tag_names = tag_item.select('.s-item__title') # find name tag
             name = None
             for tag in tag_names:
                 name = tag.text
@@ -81,33 +91,46 @@ if __name__ == '__main__':
             
             
             free_returns = False
-            tags_freereturns = tag_item.select('.s-item__free-returns')
+            tags_freereturns = tag_item.select('.s-item__free-returns') # find if this good has free return
             for tag in tags_freereturns:
                 free_returns = True
             
             items_sold = None
-            tags_items_sold = tag_item.select('.s-item__hotness')
+            tags_items_sold = tag_item.select('.s-item__hotness') # find how many of this good are sold
             for tag in tags_items_sold:
                 items_sold = parse_items_sold(tag.text)
             
             shipping = None
-            tags_shipping = tag_item.select('.s-item__shipping')
+            tags_shipping = tag_item.select('.s-item__shipping') # find the shipping fee
             for tag in tags_shipping:
                 shipping = parse_shipping(tag.text)
 
+            price = None
+            tags_price = tag_item.select('.s-item__price') # find the price of the good
+            for tag in tags_price:
+                price = parse_price(tag.text)
+            
+            status = None
+            tags_status = tag_item.select('.SECONDARY_INFO') # find the quality status of the good
+            for tag in tags_status:
+                status = parse_status(tag.text)
 
             item = {
                 'name': name,
+                'price': price,
+                'status': status,
+                'shipping': shipping,
                 'free_returns': free_returns,
                 'items_sold': items_sold,
-                'shipping': shipping
+                
             }
             
             items.append(item)
             
             for item in items:
                 print('item =', item)
-
-    filename = args.search_terms + ".json"
+    
+    filename = args.search_term + '.json' # creare json file from the search term
     with open(filename,'w') as f:
-        json.dump(items, f)
+        json.dump(items, f)    
+    
