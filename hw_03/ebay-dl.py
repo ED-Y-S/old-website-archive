@@ -54,7 +54,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Download information from ebay and convert to json')
     parser.add_argument('search_term')
     parser.add_argument('--page_number', default = 10)
-    parser.add_argument('--csv')
+    parser.add_argument('--csv', action='store_true')
     args = parser.parse_args()
     print ('args.search_terms =', args.search_term)
 
