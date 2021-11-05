@@ -11,9 +11,11 @@ data.sort_values("DateTime", inplace=True)
 date_time = data["DateTime"]
 users = data["Users"]
 in_game = data["In-Game"]
-plt.plot_date(date_time, users, linestyle='solid')
-plt.plot_date(date_time, in_game, linestyle='solid')
+plt.plot_date(date_time, users, linestyle='solid', label = 'Users Online')
+plt.plot_date(date_time, in_game, linestyle='solid', label = 'Users Online, In-Game')
+
 plt.title('Steam Weekly Activities')
 plt.xlabel('Date')
 plt.ylabel('Online Popution (in Tens of Millions)')
+plt.legend()
 plt.show()
