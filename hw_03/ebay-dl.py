@@ -22,6 +22,14 @@ def parse_items_sold(text): # creating the function that filters for only the am
     else:
         return 0
 def parse_shipping(text): # creating the function that filters for only the price of shipping
+    '''
+    >>> parse_shipping('$3000')
+    38
+    >>> parse_shipping('Free')
+    0
+    >>> parse_shipping('300')
+    0
+    '''
     numbers = ''
     for char in text:
         if char in '1234567890':
@@ -53,7 +61,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Download information from ebay and convert to json')
     parser.add_argument('search_term')
     parser.add_argument('--page_number', default = 10)
-    parser.add_argument('--csv')
+    parser.add_argument('--csv', action = 'store_true')
     args = parser.parse_args()
     print ('args.search_terms =', args.search_term)
 
