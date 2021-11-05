@@ -22,23 +22,16 @@ def parse_items_sold(text): # creating the function that filters for only the am
     else:
         return 0
 def parse_shipping(text): # creating the function that filters for only the price of shipping
-    '''
-    >>> parse_shipping('$3000')
-    38
-    >>> parse_shipping('Free')
-    0
-    >>> parse_shipping('300')
-    0
-    '''
+
     numbers = ''
     for char in text:
         if char in '1234567890':
             numbers += char
     if '$' in text:
-        numbers = '$'+ str(int(numbers)/100)
+        numbers = str(int(numbers))
         return numbers
     elif 'Free' in text:
-        numbers = '$'+ str(0)
+        numbers = str(0)
         return numbers
 def parse_price(text): # creating the function that filters for only the price of the good
     numbers = ''
@@ -46,7 +39,7 @@ def parse_price(text): # creating the function that filters for only the price o
         if char in '1234567890':
             numbers += char
     if '$' in text:
-        numbers = '$'+ str(int(numbers)/100)
+        numbers = str(int(numbers))
         return numbers
 def parse_status(text): # creating the function that filters for the quality status of the good
     t = ''
@@ -61,7 +54,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Download information from ebay and convert to json')
     parser.add_argument('search_term')
     parser.add_argument('--page_number', default = 10)
-    parser.add_argument('--csv', action = 'store_true')
+    parser.add_argument('--csv')
     args = parser.parse_args()
     print ('args.search_terms =', args.search_term)
 
@@ -144,7 +137,7 @@ if __name__ == '__main__':
         filename = args.search_term + '.csv' # create CSV file from the search term
         with open(filename,'w', encoding='UTF8', newline = '') as f:
             writer = csv.DictWriter(f,item_list)
-            writer.writeheader(item_list)
+            writer.writeheader()
             writer.writerows(items)
     else:
         filename = args.search_term + '.json' # create json file from the search term
