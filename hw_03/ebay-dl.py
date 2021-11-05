@@ -5,22 +5,16 @@ import json
 import csv
 
 def parse_items_sold(text): # creating the function that filters for only the amount sold
-    '''
-    >>> parse_items_sold('38 sold')
-    38
-    >>> parse_items_sold('14 watchers')
-    0
-    >>> parse_items_sold('38 sold')
-    0
-    '''
+
     numbers = ''
+    t = text.lower()
     for char in text:
         if char in '1234567890':
             numbers += char
-    if 'sold' in text:
+    if 'sold' in t:
         return int(numbers)
     else:
-        return 0
+        return int(0)
 def parse_shipping(text): # creating the function that filters for only the price of shipping
 
     numbers = ''
@@ -28,10 +22,10 @@ def parse_shipping(text): # creating the function that filters for only the pric
         if char in '1234567890':
             numbers += char
     if '$' in text:
-        numbers = str(int(numbers))
+        numbers = int(numbers)
         return numbers
     elif 'Free' in text:
-        numbers = str(0)
+        numbers = int(0)
         return numbers
 def parse_price(text): # creating the function that filters for only the price of the good
     numbers = ''
@@ -39,14 +33,15 @@ def parse_price(text): # creating the function that filters for only the price o
         if char in '1234567890':
             numbers += char
     if '$' in text:
-        numbers = str(int(numbers))
+        numbers = int(numbers)
         return numbers
 def parse_status(text): # creating the function that filters for the quality status of the good
     t = ''
     for char in text:
         t += char
     return t
-# this if ststaement syas only run if the def runs correctly
+
+# this if ststaement means only run if the def runs correctly (accordinh to the doctest)
 if __name__ == '__main__':
     
 
