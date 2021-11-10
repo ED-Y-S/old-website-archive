@@ -28,13 +28,24 @@ def parse_shipping(text): # creating the function that filters for only the pric
         numbers = int(0)
         return numbers
 def parse_price(text): # creating the function that filters for only the price of the good
+    '''
+    >>> parse_price('$50.00 to $300.24)
+    '''
     numbers = ''
     for char in text:
         if char in '1234567890':
             numbers += char
+    if '$' in text and 'to' in text:
+        dot_remove = text.replace('.','')
+        dollarsign = text.find('$')
+        space = text.find(' ')
+        numbers = int(text[dollarsign+1:space])
+        return numbers
     if '$' in text:
         numbers = int(numbers)
         return numbers
+    
+
 def parse_status(text): # creating the function that filters for the quality status of the good
     t = ''
     for char in text:
