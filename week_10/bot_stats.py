@@ -25,7 +25,7 @@ submission = reddit.submission(url='https://old.reddit.com/r/BotTown/comments/qq
 # and so it takes about 1 minute total to click all of them.
 # I recommend saving this step for last since it will slow down your ability to run the steps below considerably.
 # Get those working, then come back here and get this working.
-all = submission.comments.replace_more(limit=None)
+submission.comments.replace_more(limit=None)
 
 # FIXME:
 # Loop through all the top level comments to calculate:
@@ -35,21 +35,31 @@ all = submission.comments.replace_more(limit=None)
 #    You should use a dictionary where the keys are the username and the values are the total number of comments.
 amount_deleted_top = 0
 amount_nondeleted_top = 0
-amount_total_top = 0
+
+user={}
+
 
 for top_level_comment in submission.comments:
-    amount_total_top+=1
+    #if top_level_comment.author not in user:
+    #   user[top_level_comment.author] = 0
+    #    user[top_level_comment.author] += 1
+    try:
+        user[top_level_comment.author] += 1
+    except KeyError:
+        user[top_level_comment.author] = 0
+        user[top_level_comment.author] += 1 
     if top_level_comment.author:
         amount_nondeleted_top += 1
+
     else:
         amount_deleted_top += 1
 
-print('top level comments =', amount_total_top)
-print('Deleted top level comments =', amount_deleted_top)
+print('='*40)
+print('top level comments')
+print('='*40)
 print('Non-deleted top level comments =', amount_nondeleted_top)
-print('='*40)
-print('all comments')
-print('='*40)
+print('Deleted top level comments =', amount_deleted_top)
+print(user)
 
 # FIXME:
 # Repeat the calculations above,
@@ -57,17 +67,26 @@ print('='*40)
 # not just top level comments.
 all_amount_deleted_top = 0
 all_amount_nondeleted_top = 0
-all_amount_total_top = 0
-for comment in all:
-    all_amount_total_top+=1
+
+all_user = {}
+
+for comment in submission.comments.list():
+    #if comment.author not in all_user:
+    #    all_user[comment.author] = 0
+    #    all_user[comment.author] += 1
+    try:
+        all_user[comment.author] += 1
+    except KeyError:
+        all_user[comment.author] = 0
+        all_user[comment.author] += 1
     if comment.author:
         all_amount_nondeleted_top += 1
     else:
         all_amount_deleted_top += 1
 
-print('All comments =', all_amount_total_top)
-print('Deleted all level comments =', all_amount_deleted_top)
-print('Non-deleted all level comments =', all_amount_nondeleted_top)
 print('='*40)
 print('all comments')
 print('='*40)
+print('Non-deleted all level comments =', all_amount_nondeleted_top)
+print('Deleted all level comments =', all_amount_deleted_top)
+print(all_user)
