@@ -36,10 +36,10 @@ def parse_price(text): # creating the function that filters for only the price o
         if char in '1234567890':
             numbers += char
     if '$' in text and 'to' in text:
-        dot_remove = text.replace('.','')
-        dollarsign = text.find('$')
-        space = text.find(' ')
-        numbers = int(text[dollarsign+1:space])
+        dot_removed = text.replace('.','')
+        dollarsign = dot_removed.find('$')
+        space = dot_removed.find(' ')
+        numbers = int(dot_removed[dollarsign+1:space])
         return numbers
     if '$' in text:
         numbers = int(numbers)
