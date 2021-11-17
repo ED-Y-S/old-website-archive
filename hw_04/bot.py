@@ -6,12 +6,25 @@ import time
 
 # FIXME:
 # copy your generate_comment function from the madlibs assignment here
+madlibs = [
+    "I put [ART] in the [FART]", "I keep forgetting that [YOU] are still alive.", "Due to inflation [420] has gone up by [69]", "[NAUGHTIUS] [MAXIMUS]"]
+
+replacements = {
+    'ART' : ['art', 'boot', 'laughter'],
+    'FART' : ['fart', 'booty', 'slaughter'],
+    'YOU': ['Bernie', 'my sexual lives', 'my humors'],
+    '420': ['420', '71', '69'],
+    '69': ['69','71','69'],
+    'NAUGHTIUS': ['Naughtius', 'Biggus', 'Deezus'],
+    'MAXIMUS': ['Maximus', 'Dickus', 'Nuttus']
+    }
+
 def generate_comment():
 
     m = random.choice(madlibs)
     for k in replacements.keys():
         m = m.replace('['+k+']', random.choice(replacements[k]))
-
+    return m
 # connect to reddit 
 reddit = praw.Reddit('bot')
 
@@ -89,8 +102,7 @@ if True:
         # use the generate_comment() function to create the text,
         # and the .reply() function to post it to reddit;
         # a top level comment is created when you reply to a post instead of a message
-        submission.reply
-        pass
+        submission.reply(generate_comment())
 
     else:
         # FIXME (task 3): filter the not_my_comments list to also remove comments that 
@@ -101,7 +113,18 @@ if True:
         # and the inner for loop loops over all the replies of the current comment from the outer loop,
         # and then an if statement checks whether the comment is authored by you or not
         comments_without_replies = []
-
+        
+        for comment in all_comments:
+            for reply in comment.replies:
+                comment_reply_author = []
+                if reply.author == 'ElonMuskBadTakeBot':
+                    comment_reply_author.append(reply.author)
+                if 'ElonMuskBadTakeBot' in comment_reply_author:
+                    pass
+                else:
+                    comments_without_replies.append(comment)
+                    comment.reply(generate_comment())
+                
         # HINT:
         # this is the most difficult of the tasks,
         # and so you will have to be careful to check that this code is in fact working correctly
@@ -124,7 +147,7 @@ if True:
 
     # FIXME (task 5): select a new submission for the next iteration;
     # your newly selected submission should be randomly selected from the 5 hottest submissions
-    submission = random.choice()
+    submission = random.choice(reddit.subreddit("BotTown").hot(limit=5))
     pass
 
     # We sleep just for 1 second at the end of the while loop.

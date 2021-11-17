@@ -20,22 +20,16 @@ Upload your bot's name and your `madlib.py` file to sakai.
 '''
 
 madlibs = [
-    "I put [FART] in the [ART]", "I keep forgetting that [YOU] are still alive.", "Due to inflation [420] has gone up by [69]"
-    ]
+    "I put [ART] in the [FART]", "I keep forgetting that [YOU] are still alive.", "Due to inflation [420] has gone up by [69]", "[NAUGHTIUS] [MAXIMUS]"]
 
 replacements = {
-    'PYTHON' : ['Python', 'Programming', 'Coding'],
-    'GREAT' : ['great', 'magnificent', 'fantastic', 'wonderful'],
-    'TOOL' : ['tool', 'skill'],
-    'CAN_DO' : ['can do', 'is able to do', 'accomplishes', 'enables me to do', 'helps me do'],
-    'LOTS'  : ['lots', 'a whole lot', 'ridiculous amounts'],
-    'STUFF' : ['stuff', 'things', 'fun things'],
-    'LOVE' : ['love', 'adore', 'like'],
-    'EVERYONE' : ['Everyone', 'Everyone (even humanities majors)', 'Everyone, yes that means you,', 'All students', 'People everywhere', 'You'],
-    'SHOULD' : ['should', 'must', 'need to'],
-    'BECOME' : ['become', 'turn into', 'try to be'],
-    'PROGRAMMER' : ['programmer', 'developer', 'pythonista', 'software engineer'],
-    'LEARN' : ['learn', 'master', 'study'],
+    'ART' : ['art', 'boot', 'laughter'],
+    'FART' : ['fart', 'booty', 'slaughter'],
+    'YOU': ['Bernie', 'my sexual life', 'my humor'],
+    '420': ['420', '71', '69'],
+    '69': ['69','71','69'],
+    'NAUGHTIUS': ['Naughtius', 'Biggus', 'Deezus'],
+    'MAXIMUS': ['Maximus', 'Dickus', 'Nuttus']
     }
 
 
@@ -44,16 +38,16 @@ def generate_comment():
     m = random.choice(madlibs)
     for k in replacements.keys():
         m = m.replace('['+k+']', random.choice(replacements[k]))
-
     return m
+    
 reddit = praw.Reddit('bot')
 url = 'https://old.reddit.com/r/BotTown/comments/qr05je/practice_posting_messages_here/'
 submission = reddit.submission(url=url)
-for i in range(63): # spam it for 100 times
+for i in range(5): # spam it for 100 times
     submission.comments[0].reply(generate_comment())
     submission.reply(generate_comment())
     print('made a comment, i = ',i)
-    time.sleep(60*5) #let the bot "sleep" for 5 minutes
+    time.sleep(1) #let the bot "sleep" for 5 minutes
     
 
     
