@@ -62,7 +62,7 @@ if True:
     # and an if statement to check whether the comment is authored by you or not
     not_my_comments = []
     for comment in all_comments:
-        if comment.author != 'ElonMuskBadTakeBot':
+        if str(comment.author) != 'ElonMuskBadTakeBot':
             not_my_comments.append(comment)
 
     # HINT:
@@ -80,7 +80,7 @@ if True:
     # (your bot may have posted comments in other submissions);
     # your bot will behave differently depending on whether it's posted a comment or not
     has_not_commented = len(not_my_comments) == len(all_comments)
-
+    print('has not commented = ', has_not_commented)
     if has_not_commented:
         # FIXME (task 2)
         # if you have not made any comment in the thread, then post a top level comment
@@ -89,6 +89,7 @@ if True:
         # use the generate_comment() function to create the text,
         # and the .reply() function to post it to reddit;
         # a top level comment is created when you reply to a post instead of a message
+        submission.reply
         pass
 
     else:
@@ -100,6 +101,7 @@ if True:
         # and the inner for loop loops over all the replies of the current comment from the outer loop,
         # and then an if statement checks whether the comment is authored by you or not
         comments_without_replies = []
+
         # HINT:
         # this is the most difficult of the tasks,
         # and so you will have to be careful to check that this code is in fact working correctly
@@ -113,10 +115,16 @@ if True:
         # and the .reply() function to post it to reddit;
         # these will not be top-level comments;
         # so they will not be replies to a post but replies to a message
-        pass
+        comment = random.choice(comments_without_replies)
+        try:
+            comment.reply(generate_comment())
+        except praw.exceptions.APIException:
+            print("not replying to a deleted comment.")
+            pass
 
     # FIXME (task 5): select a new submission for the next iteration;
     # your newly selected submission should be randomly selected from the 5 hottest submissions
+    submission = random.choice()
     pass
 
     # We sleep just for 1 second at the end of the while loop.

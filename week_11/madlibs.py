@@ -20,8 +20,7 @@ Upload your bot's name and your `madlib.py` file to sakai.
 '''
 
 madlibs = [
-    "[PYTHON] is a [GREAT] [TOOL].  It [CAN_DO] [LOTS] of [STUFF]. [EVERYONE] [SHOULD] [LEARN] [PYTHON] and [BECOME] a [PROGRAMMER].",
-    "I [LOVE] [PYTHON].",
+    "I put [FART] in the [ART]", "I keep forgetting that [YOU] are still alive.", "Due to inflation [420] has gone up by [69]"
     ]
 
 replacements = {
