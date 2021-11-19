@@ -42,9 +42,8 @@ submission = reddit.submission(url=submission_url)
 # HINT:
 # while you are writing and debugging your code, 
 # you probably don't want it to run in an infinite loop;
-# you can change this while loop to an if statement to make the code run only once
-#while 
-if True:
+# you can change this while loop to an if statement to make the code run only once 
+while True:
 
     # printing the current time will help make the output messages more informative
     # since things on reddit vary with time
@@ -55,7 +54,9 @@ if True:
 
     # FIXME (task 0): get a list of all of the comments in the submission
     # HINT: this requires using the .list() and the .replace_more() functions
+    submission.comments.replace_more(limit=None, threshold=0)
     all_comments = submission.comments.list()
+
     # HINT: 
     # we need to make sure that our code is working correctly,
     # and you should not move on from one task to the next until you are 100% sure that 
@@ -114,17 +115,17 @@ if True:
         # and then an if statement checks whether the comment is authored by you or not
         comments_without_replies = []
         
-        for comment in all_comments:
+        for comment in not_my_comments:
+            comment_reply_author = []
             for reply in comment.replies:
-                comment_reply_author = []
-                if reply.author == 'ElonMuskBadTakeBot':
-                    comment_reply_author.append(reply.author)
-                if 'ElonMuskBadTakeBot' in comment_reply_author:
-                    pass
-                else:
-                    comments_without_replies.append(comment)
-                    comment.reply(generate_comment())
+                comment_reply_author.append(str(reply.author))
+            if 'ElonMuskBadTakeBot' in comment_reply_author:
+                pass
+            else:
+                comments_without_replies.append(comment)
+        
                 
+         
         # HINT:
         # this is the most difficult of the tasks,
         # and so you will have to be careful to check that this code is in fact working correctly
@@ -147,13 +148,13 @@ if True:
 
     # FIXME (task 5): select a new submission for the next iteration;
     # your newly selected submission should be randomly selected from the 5 hottest submissions
-    submission = random.choice(reddit.subreddit("BotTown").hot(limit=5))
-    pass
+    submission = random.choice(list(reddit.subreddit("BotTown").hot(limit=5)))
+    
 
     # We sleep just for 1 second at the end of the while loop.
     # This doesn't avoid rate limiting
     # (since we're not sleeping for a long period of time),
     # but it does make the program's output more readable.
-    time.sleep(1)
+    time.sleep(5*60)
 
 

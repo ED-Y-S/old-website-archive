@@ -43,11 +43,11 @@ def generate_comment():
 reddit = praw.Reddit('bot')
 url = 'https://old.reddit.com/r/BotTown/comments/qr05je/practice_posting_messages_here/'
 submission = reddit.submission(url=url)
-for i in range(5): # spam it for 100 times
-    submission.comments[0].reply(generate_comment())
+for i in range(100): # spam it for 100 times
+    submission.comments[i].reply(generate_comment())
     submission.reply(generate_comment())
     print('made a comment, i = ',i)
-    time.sleep(1) #let the bot "sleep" for 5 minutes
+    time.sleep(60*5) #let the bot "sleep" for 5 minutes
     
 
     
