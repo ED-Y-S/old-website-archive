@@ -20,16 +20,44 @@ Upload your bot's name and your `madlib.py` file to sakai.
 '''
 
 madlibs = [
-    "I put [ART] in the [FART]", "I keep forgetting that [YOU] are still alive.", "Due to inflation [420] has gone up by [69]", "[NAUGHTIUS] [MAXIMUS]"]
+    'Who is running this lame [COLLECTION] of [BOTS] & [TROLLS] anyway? Try harder! I’m an [ENGINEER], knucklehead. Just do [“BUSINESS”] on the side.',
+    'Tesla is filing a [LAWSUIT] against [ALAMEDA COUNTY] immediately. The unelected & ignorant [“INTERIM HEALTH OFFICER”] of [ALAMEDA] is acting contrary to the [GOVERNOR], the President, our Constitutional freedoms & just plain common sense!', 
+    '(Formerly) [MAINSTREAM MEDIA] has systemic negative & political bias about almost everything. Reading major [NEWSPAPERS] makes you feel sad & [ANGRY]. That’s why they’re being [CRUSH] by [@JOEROGAN]. ',
+    '[EXTREMELY] big difference between died because of or died with. Also, did the person actually have [C19] or did they just have [C19] symptoms? It’s almost impossible to [DIE] without feeling [WEAKNESS], shortness of breath or other [C19] symptoms, unless you were crushed by a falling [PIANO].',
+    'Another reason reported [MORTALITY] rate is overstated is that dying [*WITH*] [COVID] is not same as dying [*FROM*] covid. [MEDIA] keeps reporting former, not latter.',
+    'Well said! Please run for [OFFICE]. The politicians & unelected bureaucrats who stole our [LIBERTY] should be [TARRED], feathered & [THROWN] out of [TOWN]!']
 
 replacements = {
-    'ART' : ['art', 'boot', 'laughter'],
-    'FART' : ['fart', 'booty', 'slaughter'],
-    'YOU': ['Bernie', 'my sexual life', 'my humor'],
-    '420': ['420', '71', '69'],
-    '69': ['69','71','69'],
-    'NAUGHTIUS': ['Naughtius', 'Biggus', 'Deezus'],
-    'MAXIMUS': ['Maximus', 'Dickus', 'Nuttus']
+    'COLLECTION' : ['group', 'herd', 'wave', 'kind', 'mass', 'collection'],
+    'BOTS' : ['robot', 'losers', 'braindead', 'mentally challenged', 'bots'],
+    'TROLLS': ['no-life losers', 'losers', 'no-lifers','edgelords', 'bad jokers'],
+    'ENGINEER': ['Gamer', 'Memer', 'Engineer', 'Billionare', 'King'],
+    '"BUSINESS"': ['your mom', 'drugs', '"business"', '69', 'gamer moment'],
+    'LAWSUIT': ['action', 'trial', 'epic moment', 'gamer moment', 'lawsuit'],
+    'ALAMEDA COUNTY': ['the US', 'Mars', 'the Earth', 'the poor people','Alameda County'],
+    'ALAMEDA': ['the US', 'Mars', 'the Earth', 'poor people','Alameda County'],
+    '“INTERIM HEALTH OFFICER”': ['clown', 'gamer', 'Interim Health Officer', 'tax-paid official', 'Joker'],
+    'GOVERNOR': ['citizens', 'rich people', 'me', 'Governor','Alameda'],
+    'MAINSTREAM MEDIA':['Fox News', 'CNN', 'Twitter', 'Daily Wire', 'Mainstream Media'],
+    'NEWSPAPERS': ['newspapers', 'news outlet', 'news website', 'media', 'news'],
+    'ANGRY': ['angry', 'outraged', 'grumpy','not epic', 'not feeling the vibe'],
+    'CRUSHED': ['shit on', 'dunked on', 'crushed', 'destroyed', 'bombed'],
+    '@JOEROGAN': ['your mom\'s ass','Alex Jones', 'Ben Shapiro', '@joerogan', 'me'],
+    'EXTREMELY': ['Very', 'Tremendous', 'Gigantic', 'Enormous', 'Extremely'],
+    'C19': ['Ligma', 'Sigma', 'COVID','COVID-19','C19'],
+    'DIE': ['die', 'not-living', 'get robloxed', 'not-breathing', 'get oof-ed', 'pass away'],
+    'WEAKNESS':['not epic', 'weakness', 'exhaustion', 'fatique','weakness'],
+    'PIANO':['piano', 'SpaceX rocket','Tesla', 'your mom', 'ass'],
+    'MORTALITY': ['death', 'not-living', 'robloxed', 'not-breathing', 'oof-ed', 'pass away'],
+    'COVID': ['Ligma', 'Sigma', 'COVID','COVID-19','C19'],
+    '*WITH*': ['*along*', '*besides*','*with*','*accompanied by*', '*in the company of*'],
+    '*FROM*': ['*by*', '*from*', '*against*','out of','of'],
+    'MEDIA': ['Fox News', 'CNN', 'Twitter', 'Daily Wire', 'Mainstream Media'],
+    'OFFICE': ['President', 'Governor', 'Mayor', 'Congress', 'Senate'],
+    'LIBERTY':['freedom', 'sovereinty', 'human rights', 'liberty', 'independence'],
+    'TARRED': ['terrified', 'ashamed', 'tarred', 'fouled', 'scared'],
+    'THROWN': ['thrown', 'kicked', 'yeeted','tossed','hurled'],
+    'TOWN': ['town', 'the country', 'the state', 'the planey', 'the universe']
     }
 
 
@@ -44,7 +72,7 @@ reddit = praw.Reddit('bot')
 url = 'https://old.reddit.com/r/BotTown/comments/qr05je/practice_posting_messages_here/'
 submission = reddit.submission(url=url)
 for i in range(100): # spam it for 100 times
-    submission.comments[i].reply(generate_comment())
+    submission.comments[0].reply(generate_comment())
     submission.reply(generate_comment())
     print('made a comment, i = ',i)
     time.sleep(60*5) #let the bot "sleep" for 5 minutes
