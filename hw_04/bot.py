@@ -1,8 +1,11 @@
 from re import sub
+from nltk.featstruct import subsumes
 import praw
 import random
 import datetime
 import time
+import prawcore
+from textblob import TextBlob
 
 # FIXME:
 # copy your generate_comment function from the madlibs assignment here
@@ -173,6 +176,32 @@ while True:
         except praw.exceptions.APIException:
             print("not replying to a deleted comment.")
             pass
+    
+    for submission in reddit.subreddit("BotTown").hot(limit=5):
+        blob = TextBlob(str(submission.title))
+        pop = blob.sentiment.polarity
+        if 'Elon' in submission.title or 'Elon Musk' in submission.title or 'Musk' in submission.title:
+            if pop > 0:
+                submission.downvote()
+            if pop <= 0:
+                submission.upvote()
+        else:
+            pass
+    for comment in not_my_comments:
+        blob = TextBlob(str(comment.body))
+        pop = blob.sentiment.polarity
+        try:
+            if 'Elon' in comment.body or 'Elon Musk' in comment.body or 'Musk' in comment.body:
+                if pop > 0:
+                    comment.downvote()
+                if pop <= 0:
+                    comment.upvote()
+            else:
+                pass
+        except prawcore.exceptions.NotFound:
+            pass
+
+        
 
     # FIXME (task 5): select a new submission for the next iteration;
     # your newly selected submission should be randomly selected from the 5 hottest submissions
@@ -183,6 +212,6 @@ while True:
     # This doesn't avoid rate limiting
     # (since we're not sleeping for a long period of time),
     # but it does make the program's output more readable.
-    time.sleep(5*60)
+    time.sleep(60)
 
 
