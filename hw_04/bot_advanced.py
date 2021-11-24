@@ -1,11 +1,8 @@
 from re import sub
-from nltk.featstruct import subsumes
 import praw
 import random
 import datetime
 import time
-import prawcore
-from textblob import TextBlob
 
 # FIXME:
 # copy your generate_comment function from the madlibs assignment here
@@ -62,7 +59,7 @@ reddit = praw.Reddit('bot')
 
 # select a "home" submission in the /r/BotTown subreddit to post to,
 # and put the url below
-submission_url = 'https://old.reddit.com/r/BotTown1/comments/r0v2gb/elon_musk_bad_take_thread/'
+submission_url = 'https://old.reddit.com/r/BotTown/comments/qvlcrc/elonmuskbadtakes_thread/?'
 submission = reddit.submission(url=submission_url)
 
 # each iteration of this loop will post a single comment;
@@ -176,18 +173,16 @@ while True:
         except praw.exceptions.APIException:
             print("not replying to a deleted comment.")
             pass
-    
-        
 
     # FIXME (task 5): select a new submission for the next iteration;
     # your newly selected submission should be randomly selected from the 5 hottest submissions
-    submission = random.choice(list(reddit.subreddit("BotTown1").hot(limit=5)))
+    submission = random.choice(list(reddit.subreddit("BotTown").hot(limit=5)))
     
 
     # We sleep just for 1 second at the end of the while loop.
     # This doesn't avoid rate limiting
     # (since we're not sleeping for a long period of time),
     # but it does make the program's output more readable.
-    time.sleep(60*9)
+    time.sleep(10*60)
 
 
