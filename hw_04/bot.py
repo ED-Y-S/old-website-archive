@@ -10,7 +10,7 @@ from textblob import TextBlob
 # FIXME:
 # copy your generate_comment function from the madlibs assignment here
 madlibs = [
-    'Who is running this lame [COLLECTION] of [BOTS] & [TROLLS] anyway? Try harder! I’m an [ENGINEER], knucklehead. Just do [“BUSINESS”] on the side.',
+    'Who is running this lame [COLLECTION] of [BOTS] & [TROLLS] anyway? Try harder! I’m an [ENGINEER], knucklehead. Just do [BUSINESS] on the side.',
     'Tesla is filing a [LAWSUIT] against [ALAMEDA COUNTY] immediately. The unelected & ignorant [“INTERIM HEALTH OFFICER”] of [ALAMEDA] is acting contrary to the [GOVERNOR], the President, our Constitutional freedoms & just plain common sense!', 
     '(Formerly) [MAINSTREAM MEDIA] has systemic negative & political bias about almost everything. Reading major [NEWSPAPERS] makes you feel sad & [ANGRY]. That’s why they’re being [CRUSH] by [@JOEROGAN]. ',
     '[EXTREMELY] big difference between died because of or died with. Also, did the person actually have [C19] or did they just have [C19] symptoms? It’s almost impossible to [DIE] without feeling [WEAKNESS], shortness of breath or other [C19] symptoms, unless you were crushed by a falling [PIANO].',
@@ -22,7 +22,7 @@ replacements = {
     'BOTS' : ['robot', 'losers', 'braindead', 'mentally challenged', 'bots'],
     'TROLLS': ['no-life losers', 'losers', 'no-lifers','edgelords', 'bad jokers'],
     'ENGINEER': ['Gamer', 'Memer', 'Engineer', 'Billionare', 'King'],
-    '"BUSINESS"': ['your mom', 'drugs', '"business"', '69', 'gamer moment'],
+    'BUSINESS': ['your mom', 'drugs', '"business"', '69', 'gamer moment'],
     'LAWSUIT': ['action', 'trial', 'epic moment', 'gamer moment', 'lawsuit'],
     'ALAMEDA COUNTY': ['the US', 'Mars', 'the Earth', 'the poor people','Alameda County'],
     'ALAMEDA': ['the US', 'Mars', 'the Earth', 'poor people','Alameda County'],
@@ -62,7 +62,7 @@ reddit = praw.Reddit('bot')
 
 # select a "home" submission in the /r/BotTown subreddit to post to,
 # and put the url below
-submission_url = 'https://old.reddit.com/r/BotTown1/comments/r0v2gb/elon_musk_bad_take_thread/'
+submission_url = 'https://old.reddit.com/r/BotTown2/comments/r0ynzr/elon_musk_bad_takes/'
 submission = reddit.submission(url=submission_url)
 
 # each iteration of this loop will post a single comment;
@@ -170,24 +170,30 @@ while True:
         # and the .reply() function to post it to reddit;
         # these will not be top-level comments;
         # so they will not be replies to a post but replies to a message
-        comment = random.choice(comments_without_replies)
         try:
-            comment.reply(generate_comment())
-        except praw.exceptions.APIException:
-            print("not replying to a deleted comment.")
+            comment = random.choice(comments_without_replies)
+            try:
+                comment.reply(generate_comment())
+        
+            except praw.exceptions.APIException:
+                print("not replying to a deleted comment.")
+                pass
+        except IndexError:
+            print("all are my comments")
             pass
+        
     
         
 
     # FIXME (task 5): select a new submission for the next iteration;
     # your newly selected submission should be randomly selected from the 5 hottest submissions
-    submission = random.choice(list(reddit.subreddit("BotTown1").hot(limit=5)))
+    submission = random.choice(list(reddit.subreddit("BotTown2").hot(limit=5)))
     
 
     # We sleep just for 1 second at the end of the while loop.
     # This doesn't avoid rate limiting
     # (since we're not sleeping for a long period of time),
     # but it does make the program's output more readable.
-    time.sleep(60*9)
+    time.sleep(1)
 
 

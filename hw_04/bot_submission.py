@@ -14,13 +14,16 @@ for i in range(200):
         url = submission.url
         text = submission.selftext
         if url:
-            reddit.subreddit('BotTown1').submit(title, url= url)
+            reddit.subreddit('BotTown2').submit(title, url= url)
+            print("submission ", i)
         else:
-            reddit.subreddit('BotTown1').submit(title, selftext= text)
+            reddit.subreddit('BotTown2').submit(title, selftext= text)
+            print("submission ", i)
     except praw.exceptions.InvalidURL:
         print('The URL is not Valid')
         pass
-    print("submission ", i)
+    time.sleep(1)
+    
     
 
     
