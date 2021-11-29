@@ -6,7 +6,7 @@ import datetime
 import time
 reddit = praw.Reddit('bot')
 
-for i in range(200):
+while True:
     try:
         top = list(reddit.subreddit('elonmusk').hot(limit = None))
         submission = random.choice(top)
@@ -15,10 +15,10 @@ for i in range(200):
         text = submission.selftext
         if url:
             reddit.subreddit('BotTown2').submit(title, url= url)
-            print("submission ", i)
+            print("url/media submission")
         else:
             reddit.subreddit('BotTown2').submit(title, selftext= text)
-            print("submission ", i)
+            print("text submission")
     except praw.exceptions.InvalidURL:
         print('The URL is not Valid')
         pass
