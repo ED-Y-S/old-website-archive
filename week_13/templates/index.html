@@ -1,21 +1,21 @@
 
 <head>
     <title>
-        Hello!
+        Welcome to Delink!
     </title>
-    <link rel="stylesheet" href="static/database.css">
-    <meta name="Description" 
-content="This is the main page of Eddie's CSCI40 project">
+    <link rel="stylesheet" href="/static/database.css">
+    <meta name="Description" content="Delink The Forum">
 </head>
 <div class="centerimg center">
-    <p><strong><h2>Weclome to the Forum!</h2></strong></p>
+    <p><strong><h2>Weclome to the Delink Forum!</h2></strong></p>
     <hr/>
+    <img src="/static/delink.png" width=300px length=600px alt= "Your image did not load :("/>
     <p><h3><b>Newest Comments</b></h3></p>
-
+    <p><h4>Useranme&nbsp;&nbsp;&nbsp;&nbsp;Message&nbsp;&nbsp;&nbsp;&nbsp;Time&nbsp;&nbsp;&nbsp;&nbsp;Age</h4></p>
     <p>
         {% for message in messages %}
         <p>
-            {{message}}
+            {{message['Username']}}:&nbsp;&nbsp;&nbsp;&nbsp;"{{message['Message']}}"&nbsp;&nbsp;&nbsp;{{message['Time']}}&nbsp;&nbsp;&nbsp;{{message['Age']}}
         </p>
         {% endfor %} 
     </p>

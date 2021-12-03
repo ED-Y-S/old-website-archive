@@ -23,9 +23,9 @@ cur = con.cursor()
 # print('================================================================================')
 # print('users')
 # print('================================================================================')
-# sql = """
-# select * from users;
-# """
+sql = """
+ select * from users;
+ """
 # cur.execute(sql)
 # for row in cur.fetchall(): # .fetchall() gives access to all the results, NOT all rows. It's for the command above to do.
 #     print('id=', row[0])
@@ -41,37 +41,11 @@ cur = con.cursor()
 # sql = """
 # select * from messages;
 # """
-# cur.execute(sql)
-# for row in cur.fetchall():
+cur.execute(sql)
+for row in cur.fetchall():
 #     print('id=', row[0])
-#     print('id_sender=', row[1])
+   print('id_sender=', row[1])
 #     print('message=', row[2])
 #     print('created_at=', row[3])
 #     print('================')
 
-app = Flask(__name__)
-@app.route('/static/<path:name>', methods=['GET'])
-def get_output_file(name):
-    print(name)
-    if ".." in name:
-        abort(404)
-    file_path = Path("D:\CSCI40\eddie-shi.github.io\week_13\static\{}".format(name))
-    if file_path.is_file():
-        return send_file(file_path)
-    abort(404)
-    return 0
-@app.route('/')
-def root():
-    messages = []
-    cur.execute('''SELECT message FROM messages ORDER BY created_at DESC''')
-    for row in cur.fetchall():
-        messages.append(row[0]) 
-    return render_template('index.html', messages = messages)
-
-# @app.route('/login')
-# @app.route('/logout')
-# @app.route('/create_message')
-# @app.route('/create_user')
-
-
-app.run()
