@@ -23,7 +23,7 @@ def get_output_file(name):
 def root():
     messages = []
     
-    con = sqlite3.connect(args.db_file, check_same_thread=False)
+    con = sqlite3.connect(args.db_file)
     cur = con.cursor()
     cur.execute('''SELECT * FROM messages ORDER BY created_at DESC''')
     for row in cur.fetchall():
