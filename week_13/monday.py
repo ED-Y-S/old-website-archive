@@ -3,7 +3,7 @@ from flask.templating import render_template
 app = Flask(__name__)
 @app.route('/')
 def root():
-    return "Hello B Words!"
+    return "Hello! Welcome to the main page!"
 @app.route('/login')
 @app.route('/logout')
 @app.route('/create_message')
