@@ -5,7 +5,7 @@ import requests
 # from the lab instructions below.
 def is_server_at_ip(ip):
     try:
-        r = requests.get('http://'+ip, headers={'host': 'this can be anything :)'}, timeout = 5)
+        r = requests.get('http://'+ip, headers={'host': 'this can be anything :)'}, timeout = 5, allow_redirects=False)
         return True
     except requests.exceptions.ConnectTimeout:
         return False
@@ -16,17 +16,30 @@ def is_server_at_ip(ip):
 # Recall that the DPRK is assigned all IP addresses in the range from `175.45.176.0` to `175.45.179.255` (1024 IPs in total).
 # These IP addresses should be represented as python strings.
 # It is possible to do this using either a 1-line list comprehension or a multi-line for loop.
-ip_list=[]
+dprk_ips=[]
 ip = '175.45.176.0'
-ip_list.append(ip)
+dot = '.'
 parts = ip.split('.')
+for x in range(176,180):
+    for s in range(0,256):
+        ipf = parts[0]+dot+parts[1]+dot+str(x)+dot+str(s)
+        dprk_ips.append(ipf)
+
 
 
 
 # FIXME 2:
 # Create a list of all IP addresses in dprk_ips that have a server at them.
 # Print this list of IPs to the screen.
-
+dprk_ips_has = []
+for ip in dprk_ips:
+    if is_server_at_ip(ip):
+        dprk_ips_has.append(ip)
+        print(ip)
+    else:
+        pass
+        print(ip, 'passed')
+print(dprk_ips_has)
 # HINT:
 # There are 1024 IPs that you must scan,
 # and you're waiting up to 5 seconds for each.

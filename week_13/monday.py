@@ -10,13 +10,12 @@ def root():
 @app.route('/create_user')
 
 
-app.run()
+@app.run()
 
 
-'''
-@app.route('/users') #add a path
-def users():
-    username = "Mike"
-    users = ['mike', 'kristen', 'issac']
-    return render_template('users.html', username=username, users=users)
-'''
+
+#@app.route('/users') #add a path
+#def users():
+#username = "Mike"
+#users = ['mike', 'kristen', 'issac']
+#return render_template('users.html', username=username, users=users)
