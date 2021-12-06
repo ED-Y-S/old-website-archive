@@ -1,13 +1,13 @@
-<head>
-    <title>
-        Login
-    </title>
-    <link rel="stylesheet" href="/static/database.css">
-    <meta name="Description" content="Login to Delink">
-</head>
-<div class="centerimg center">
-    <p><strong><h2>Login to Delink!</h2></strong></p>
-</div>
+{% extends 'base.html' %}
+
+{% block title %}
+<h2>Login</h2>
+{% endblock %}
+
+{% if display_error %}
+Invalid Username/Password
+{% endif %}
+
 {% block content %}
 <form action=/login method=POST>
     <table>
@@ -22,3 +22,4 @@
 If you don't have a user account, then <a href=/create_user>create one</a>.
 </p>
 {% endblock %}
+

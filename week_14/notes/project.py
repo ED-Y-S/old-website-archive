@@ -1,14 +1,8 @@
-import sqlite3
-import argparse
-from flask import Flask,abort,send_file
-from pathlib import Path
-from flask.templating import render_template
-
 ########################################
 # flask/db setup
 ########################################
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, make_response
 app = Flask(__name__)
 
 # sqlite3 is built in python3, no need to pip3 install
@@ -77,59 +71,81 @@ def is_valid_login(con, username, password):
 # custom routes
 ########################################
 
-app = Flask(__name__)
-@app.route('/static/<path:name>', methods=['GET'])
-def get_output_file(name):
-    print_debug_info()
-    print(name)
-    if ".." in name:
-        abort(404)
-    file_path = Path("D:\CSCI40\eddie-shi.github.io\week_13\static\{}".format(name))
-    if file_path.is_file():
-        return send_file(file_path)
-    abort(404)
-    return 0
-@app.route('/')
+@app.route('/')     
 def root():
-    print_debug_info()
-    messages = []
-    
     con = sqlite3.connect(args.db_file)
-    cur = con.cursor()
-    cur.execute('''SELECT * FROM messages ORDER BY created_at DESC''')
-    for row in cur.fetchall():
-        cur.execute('''SELECT * FROM users where id =''' + str(row[1]))
-        for row2 in cur.fetchall():
-            message_dic = {
-            'Username' : row2[1],
-            'Message' : row[2],
-            'Time' : row[3],
-            'Age' : row2[3]
-            }
-            messages.append(message_dic)
-    return render_template('root.html', messages = messages)
-
-@app.route('/login',methods=['GET','POST'])
-def login():
     print_debug_info()
-    return render_template('login.html')
+
+    username = print("request.cookies.get('username')=",request.cookies.get('username'))
+    password = print("request.cookies.get('password')=",request.cookies.get('password'))
+    is_logged_in = is_valid_login(con, username, password)
+
+    return render_template('root.html', is_logged_in=is_logged_in)
+
+
+@app.route('/login', methods=['GET','POST']) #GET by default
+def login():
+    con = sqlite3.connect(args.db_file)
+    print_debug_info()
+    form_username = request.form.get('username')
+    form_password = request.form.get('password')
+    print("form_username", form_username)
+    print('form_password', form_password)
+
+    has_clicked_form = form_username is not None
+    print('has_clicked_form', has_clicked_form)
+
     
-@app.route('/logout')
+
+    
+
+    # if no one clicked on the forml
+    # do nothing
+    
+    if has_clicked_form:
+        login_info_correct = is_valid_login(con, form_username, form_password)
+        
+        if login_info_correct:
+            #if someone has clicked on the form;
+            #and the information is correct
+            #then we should set cookies
+            response = make_response(render_template('login.html'))
+            response.set_cookie('username', form_username)
+            response.set_cookie('password', form_password)
+            return response
+        else:
+            return render_template('login.html', display_error = True)
+    else:
+        # if someone clicked on the form;
+        # and the form information is wrong;
+        # then we should display an error
+        render_template('login.html')
+    
+
+@app.route('/logout')     
 def logout():
     print_debug_info()
-    return render_template('logout.html')
-@app.route('/create_message')
-def post():
+    response = make_response(render_template('logout.html'))
+    response.set_cookie('username', '', expires=0)
+    response.set_cookie('password', '', expires=0)
+    return response
+    
+
+@app.route('/create_message')     
+def create_message():
     print_debug_info()
     return render_template('create_message.html')
-@app.route('/create_user')
-def register():
+    
+
+@app.route('/create_user')     
+def create_user():
     print_debug_info()
     return render_template('create_user.html')
-@app.route('/base')
-def menu():
-    print_debug_info()
-    return render_template('base.html')
+    
 
+########################################
+# boilerplate
+########################################
 
-app.run()
+if __name__=='__main__':
+    app.run()

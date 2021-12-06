@@ -12,12 +12,15 @@
     <img src="/static/delink.png" width=300px length=600px alt= "Your image did not load :("/>
     <p><h3><b>Newest Comments</b></h3></p>
     <p><h4>Useranme&nbsp;&nbsp;&nbsp;&nbsp;Message&nbsp;&nbsp;&nbsp;&nbsp;Time&nbsp;&nbsp;&nbsp;&nbsp;Age</h4></p>
-    <p>
+    {% block content %}
+    <table border=1 cellpadding=5>
+        <td>USERNAME</td><td>MESSAGE</td><td>TIME</td><td>AGE</td>
         {% for message in messages %}
-        <p>
-            {{message['Username']}}:&nbsp;&nbsp;&nbsp;&nbsp;"{{message['Message']}}"&nbsp;&nbsp;&nbsp;{{message['Time']}}&nbsp;&nbsp;&nbsp;{{message['Age']}}
-        </p>
+        <tr>
+            <td>{{message['Username']}}</td><td>"{{message['Message']}}"</td><td>{{message['Time']}}</td><td>{{message['Age']}}</td>
+        </tr>
         {% endfor %} 
-    </p>
+    </table>
+    {% endblock %}
 </div>
 
