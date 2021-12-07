@@ -6,14 +6,23 @@
     <link rel="stylesheet" href="/static/database.css">
     <meta name="Description" content="Delink The Forum">
 </head>
+<body>
+    {% extends 'base.html' %}
+</body>
+{% block title %}
 <div class="centerimg center">
+    
     <p><strong><h2>Weclome to the Delink Forum!</h2></strong></p>
+{% endblock %}
     <hr/>
+{% block content %}
     <img src="/static/delink.png" width=300px length=600px alt= "Your image did not load :("/>
+   
     <p><h3><b>Newest Comments</b></h3></p>
-    <p><h4>Useranme&nbsp;&nbsp;&nbsp;&nbsp;Message&nbsp;&nbsp;&nbsp;&nbsp;Time&nbsp;&nbsp;&nbsp;&nbsp;Age</h4></p>
-    {% block content %}
-    <table border=1 cellpadding=5>
+
+</div>
+    
+    <table id="center_table" border=1 cellpadding=5>
         <td>USERNAME</td><td>MESSAGE</td><td>TIME</td><td>AGE</td>
         {% for message in messages %}
         <tr>
@@ -21,6 +30,7 @@
         </tr>
         {% endfor %} 
     </table>
-    {% endblock %}
-</div>
+{% endblock %}
+
+
 

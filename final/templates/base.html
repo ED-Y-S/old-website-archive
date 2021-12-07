@@ -1,12 +1,27 @@
-<head>
-    <title>
-        Menu
-    </title>
-    <link rel="stylesheet" href="/static/database.css">
-    <meta name="Description" content="Menu of Delink">
-</head>
-
-<div class="centerimg center">
-    <a class = "centerimg"><p><strong><h2>Guidance Menu</h2></strong></p></a>
-    <p><a href ="login.html" target="_blank">Login</a></p>
-</div>
+<html>
+    <head>
+        <title>
+            Menu
+        </title>
+        <link rel="stylesheet" href="/static/database.css">
+        <meta name="Description" content="Menu of Delink">
+    </head>
+    <body>
+        {% block title %}
+        {% endblock %}
+        {% block content %}
+        {% endblock %}
+        <div class="center">
+            <ul>
+                <li><a href='/'>Home</a></li>
+                {% if is_logged_in %}
+                <li><a href='/kogout'>Logout</a></li>
+                <li><a href='/create_message'>Create message</a></li>
+                {% else %}
+                <li><a href='/login'>Login</a></li>
+                <li><a href='/create_user'>Create user</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </body>
+</html>

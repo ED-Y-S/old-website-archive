@@ -1,6 +1,6 @@
 import sqlite3
 import argparse
-from flask import Flask,abort,send_file
+from flask import Flask,abort,send_file, make_response, request
 from pathlib import Path
 from flask.templating import render_template
 
@@ -111,13 +111,44 @@ def root():
 
 @app.route('/login',methods=['GET','POST'])
 def login():
+    con = sqlite3.connect(args.db_file)
     print_debug_info()
+    form_username = request.form.get('username')
+    form_password = request.form.get('password')
+    print("form_username", form_username)
+    print('form_password', form_password)
+
+    has_clicked_form = form_username is not None
+    print('has_clicked_form', has_clicked_form)
+    
+    if has_clicked_form:
+        login_info_correct = is_valid_login(con, form_username, form_password)
+        
+        if login_info_correct:
+            #if someone has clicked on the form;
+            #and the information is correct
+            #then we should set cookies
+            response = make_response(render_template('login.html'))
+            response.set_cookie('username', form_username)
+            response.set_cookie('password', form_password)
+            return response
+        else:
+            return render_template('login.html', display_error = True)
+    else:
+        # if someone clicked on the form;
+        # and the form information is wrong;
+        # then we should display an error
+        render_template('login.html')
     return render_template('login.html')
     
 @app.route('/logout')
 def logout():
     print_debug_info()
-    return render_template('logout.html')
+    response = make_response(render_template('logout.html'))
+    response.set_cookie('username', '', expires=0)
+    response.set_cookie('password', '', expires=0)
+    return response
+
 @app.route('/create_message')
 def post():
     print_debug_info()
