@@ -7,7 +7,7 @@
     <meta name="Description" content="Login to Delink">
 </head>
 {% block title %}
-<div class="centerimg center">
+<div class="center">
     <p><strong><h2>Login to Delink!</h2></strong></p>
 </div>
 {% endblock %}
@@ -22,7 +22,9 @@
     </table>
 </form>
 {% if display_error %}
-<p style='color:red;'>Invalid username/password.</p>
+<a class="center"><p style='color:red;'>Invalid username/password.</p></a>
+{% elif is_logged_in  %}
+<a class="center"><p>Successfully Logged In!</p></a>
 {% endif %}
 
 

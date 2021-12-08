@@ -9,13 +9,11 @@
     <body>
         {% block title %}
         {% endblock %}
-        {% block content %}
-        {% endblock %}
         <div class="center">
             <ul>
                 <li><a href='/'>Home</a></li>
                 {% if is_logged_in %}
-                <li><a href='/kogout'>Logout</a></li>
+                <li><a href='/logout'>Logout</a></li>
                 <li><a href='/create_message'>Create message</a></li>
                 {% else %}
                 <li><a href='/login'>Login</a></li>
@@ -23,5 +21,7 @@
                 {% endif %}
             </ul>
         </div>
+        {% block content %}
+        {% endblock %}
     </body>
 </html>

@@ -51,17 +51,17 @@ def is_valid_login(con, username, password):
     '''
 
     # query the database for users with the given username/password
+
     sql = """
     SELECT username,password
     FROM users
-    WHERE username='"""+str(username)+"""'
-      AND password='"""+str(password)+"""';
+    WHERE username=? --- Question mark means that we dont know what it is, but will come later
+      AND password=?;
     """
     print('is_valid_login: sql=',sql)
     cur = con.cursor()
-    cur.execute(sql)
+    cur.execute(sql, [username,password]) #the bracket is parameter
     rows = cur.fetchall()
-
     # if the total number of rows returned is 0,
     # then no username/password combo was not found
     if len(list(rows))==0:
@@ -71,6 +71,23 @@ def is_valid_login(con, username, password):
     # then the username/password combo was found
     else:
         return True
+def can_register(con, username):
+    sql = """
+    SELECT username
+    FROM users
+    WHERE username=?; --- Question mark means that we dont know what it is, but will come later
+    """
+    print('is_valid_login: sql=',sql)
+    cur = con.cursor()
+    cur.execute(sql, [username]) #the bracket is parameter
+    rows = cur.fetchall()
+    if len(list(rows))==0:
+        return True
+
+    # if the total number of rows returned is > 0,
+    # then the username/password combo was found
+    else:
+        return False
 
 
 ########################################
@@ -107,7 +124,10 @@ def root():
             'Age' : row2[3]
             }
             messages.append(message_dic)
-    return render_template('root.html', messages = messages)
+    username = request.cookies.get('username')
+    password = request.cookies.get('password')
+    is_logged_in = is_valid_login(con, username, password)
+    return render_template('root.html', messages = messages, is_logged_in=is_logged_in)
 
 @app.route('/login',methods=['GET','POST'])
 def login():
@@ -128,7 +148,7 @@ def login():
             #if someone has clicked on the form;
             #and the information is correct
             #then we should set cookies
-            response = make_response(render_template('login.html'))
+            response = make_response(render_template('login.html', is_logged_in= True))
             response.set_cookie('username', form_username)
             response.set_cookie('password', form_password)
             return response
@@ -139,6 +159,8 @@ def login():
         # and the form information is wrong;
         # then we should display an error
         render_template('login.html')
+
+    
     return render_template('login.html')
     
 @app.route('/logout')
@@ -151,11 +173,29 @@ def logout():
 
 @app.route('/create_message')
 def post():
-    print_debug_info()
+    
     return render_template('create_message.html')
-@app.route('/create_user')
+@app.route('/create_user',methods=['GET','POST'])
 def register():
+    con = sqlite3.connect(args.db_file)
+    cur = con.cursor()
     print_debug_info()
+    create_username = request.form.get('username')
+    create_password = request.form.get('password')
+    create_age = request.form.get('age')
+    has_clicked_form = create_username is not None
+    if has_clicked_form:
+        register_true = can_register(con, create_username)
+        if register_true and create_password !=None and create_password !='':
+            cur.execute("INSERT INTO users (username, password, age) values ('"+create_username+"','"+create_password+"','"+create_age+"')")
+            con.commit()
+            return render_template('create_user.html', is_created = True) 
+        if register_true is False: 
+            return render_template('create_user.html', display_error = True)
+        if create_password == None or create_password == '':
+            return render_template('create_user.html', no_password = True)  
+    else:
+        render_template('create_user.html')  
     return render_template('create_user.html')
 @app.route('/base')
 def menu():

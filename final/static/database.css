@@ -54,9 +54,16 @@ p ul li{
     width: 40%;
   }
 .centerlogin {
-    margin-left: 1150;
+    margin-left: auto;
     margin-right: auto;
-    width: 100%;
+    width: 15%;
+}
+
+.centerlist {
+    
+    margin-left: auto;
+    margin-right: auto;
+    width: 8%;
 }
 .fade{
     animation: fadeAndScale 1s cubic-bezier(0,1.07,.72,1.42);

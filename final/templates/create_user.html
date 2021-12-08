@@ -6,6 +6,29 @@
     <meta name="Description" 
     content="Register a Delink account">
 </head>
-<div class="centerimg center">
-    <p><strong><h2>Create your Delink Account!</h2></strong></p>
+{% extends 'base.html' %}
+{% block title %}
+<div class="center">
+    <p><strong><h2>Create your Delink Account!</h2></strong></p> 
 </div>
+{% endblock %}
+
+{% block content %}
+<form class="centerlogin" action=/create_user method=POST>
+    <table>
+        <tr><td>Username</td><td><input type=text name=username></td></tr>
+        <tr><td>Password</td><td><input type=password name=password></td></tr>
+        <tr><td>Age</td><td><input type=password name=age></td></tr>
+        <tr><td></td><td><input type=submit value='Register'></td></tr>
+    </table>
+</form>
+
+{% if display_error %}
+<a class="center"><p style='color:red;'>Username already exist!</p></a>
+{% elif is_created %}
+<a class="center"><p>Successfully Registered!</p></a>
+{% endif %}
+{% if no_password %}
+<a class="center"><p style='color:red;'>You have to enter a password</p></a>
+{% endif %}
+{% endblock %}
