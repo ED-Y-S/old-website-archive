@@ -5,6 +5,24 @@
     <link rel="stylesheet" href="/static/database.css">
     <meta name="Description" content="Post Message on Delink">
 </head>
+{% extends 'base.html' %}
+{% block title %}
 <div class="centerimg center">
     <p><strong><h2>Post your thought on Delink</h2></strong></p>
 </div>
+{% endblock %}
+{% block content %}
+<form class="centerlogin" action=/create_message method=POST>
+    <table>
+        <tr><td>Message</td></tr>
+        <td><input type=text name=message></td></tr>
+        <tr><td></td><td><input type=submit value='Post'></td></tr>
+    </table>
+</form>
+
+{% if not_logged_in %}
+<a class="center"><p style='color:red;'>You have to log in before posting</p></a>
+{% elif posted %}
+<a class="center"><p>Successfully Posted!</p></a>
+{% endif %}
+{% endblock %}

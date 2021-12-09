@@ -3,6 +3,7 @@ import argparse
 from flask import Flask,abort,send_file, make_response, request
 from pathlib import Path
 from flask.templating import render_template
+from datetime import datetime   
 
 ########################################
 # flask/db setup
@@ -171,10 +172,37 @@ def logout():
     response.set_cookie('password', '', expires=0)
     return response
 
-@app.route('/create_message')
+@app.route('/create_message',methods=['GET','POST'])
 def post():
+    con = sqlite3.connect(args.db_file)
+    cur = con.cursor()
+    username = request.cookies.get('username')
+    password = request.cookies.get('password')
+    if username is not None:
+        cur.execute("SELECT * FROM users where username=" +"'"+username+"';")
+    else:
+        pass
+    id_user = ''
+    for row in cur.fetchall():
+        id_user+=str(row[0])
+    time = datetime.now()
+    message = request.form.get('message')  
+    is_logged_in = is_valid_login(con, username, password)
+    has_clicked_form = message is not None
+    if is_logged_in:
+        if has_clicked_form:
+            cur.execute("INSERT INTO messages (sender_id,message,created_at) values ("+str(id_user)+",'"+ str(message)+"','"+str(time)+"')")
+            con.commit()
+            return render_template('create_message.html', posted = True, is_logged_in = True)
+        else:
+            render_template('create_message.html', posted = False, is_logged_in = True)
+        return render_template('create_message.html', is_logged_in = True)
+    else:
+        return render_template('create_message.html', not_logged_in = True)  
     
-    return render_template('create_message.html')
+
+ 
+
 @app.route('/create_user',methods=['GET','POST'])
 def register():
     con = sqlite3.connect(args.db_file)
@@ -187,7 +215,7 @@ def register():
     if has_clicked_form:
         register_true = can_register(con, create_username)
         if register_true and create_password !=None and create_password !='':
-            cur.execute("INSERT INTO users (username, password, age) values ('"+create_username+"','"+create_password+"','"+create_age+"')")
+            cur.execute("INSERT INTO users (username, password, age) values ('"+create_username+"','"+create_password+"','"+str(create_age)+"')")
             con.commit()
             return render_template('create_user.html', is_created = True) 
         if register_true is False: 
