@@ -3,7 +3,8 @@ import argparse
 from flask import Flask,abort,send_file, make_response, request
 from pathlib import Path
 from flask.templating import render_template
-from datetime import datetime   
+from datetime import datetime  
+import markdown_compiler as mc
 
 ########################################
 # flask/db setup
@@ -192,7 +193,7 @@ def post():
     has_clicked_form = message is not None
     if is_logged_in:
         if has_clicked_form:
-            cur.execute("INSERT INTO messages (sender_id,message,created_at) values ("+str(id_user)+",'"+ str(message)+"','"+str(time)+"')")
+            cur.execute("INSERT INTO messages (sender_id,message,created_at) values (?,?,?)", [str(id_user),str(message),str(time)])
             con.commit()
             return render_template('create_message.html', posted = True, is_logged_in = True)
         else:
