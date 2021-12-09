@@ -90,7 +90,12 @@ def can_register(con, username):
     # then the username/password combo was found
     else:
         return False
-
+def url_to_html(comment):
+    comment=comment.split(' ')
+    for x in comment:
+        if "https://" in comment[x] or 'http://' in comment[x]:
+            comment_converted = comment[:x]+'<a href='+comment[x]+'></a>' + comment[x+1:]
+    return comment_converted
 
 ########################################
 # custom routes
@@ -188,7 +193,7 @@ def post():
         id_user+=str(row[0])
     time = datetime.now()
     time = time.strftime("%Y-%m-%d %H:%M:%S")
-    message = request.form.get('message')  
+    message = url_to_html(request.form.get('message')) 
     is_logged_in = is_valid_login(con, username, password)
     has_clicked_form = message is not None
     if is_logged_in:
