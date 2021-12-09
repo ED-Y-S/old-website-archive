@@ -186,6 +186,7 @@ def post():
     for row in cur.fetchall():
         id_user+=str(row[0])
     time = datetime.now()
+    time = time.strftime("%Y-%m-%d %H:%M:%S")
     message = request.form.get('message')  
     is_logged_in = is_valid_login(con, username, password)
     has_clicked_form = message is not None
