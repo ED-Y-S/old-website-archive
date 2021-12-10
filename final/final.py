@@ -99,7 +99,9 @@ def url_to_html(comment):
             if "https://" in x or 'http://' in x:
                 comment_converted=bleach.linkify(comment)
             else:
-                comment_converted=bleach.clean(comment)
+                comment_converted=mc.compile_lines('\n'+comment+'\n')
+                comment_converted=bleach.clean(comment_converted, tags=['a', 'abbr', 'acronym', 'b', 'blockquote', 
+                'code', 'em', 'i', 'li', 'ol', 'strong', 'ul', 'p'])
     else:
         return comment
     return comment_converted

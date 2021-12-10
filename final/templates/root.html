@@ -26,7 +26,7 @@
         <td>USERNAME</td><td>MESSAGE</td><td>TIME</td><td>AGE</td>
         {% for message in messages %}
         <tr>
-            <td>{{message['Username']}}</td><td>"{{message['Message']}}"</td><td>{{message['Time']}}</td><td>{{message['Age']}}</td>
+            <td>{{message['Username']}}</td><td>"{{message['Message'] | safe }}"</td><td>{{message['Time']}}</td><td>{{message['Age']}}</td>
         </tr>
         {% endfor %} 
     </table>

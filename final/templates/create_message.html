@@ -12,8 +12,7 @@
 </div>
 {% endblock %}
 
-{% block content%}
-{% autoescape false %}
+{% block content %}
 <form class="centerlogin" action=/create_message method=POST>
     <table>
         <tr><td>Message</td></tr>
@@ -27,5 +26,4 @@
 {% elif posted %}
 <a class="center"><p>Successfully Posted!</p></a>
 {% endif %}
-{% endautoescape %}
 {% endblock %}
