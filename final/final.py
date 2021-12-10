@@ -6,6 +6,7 @@ from pathlib import Path
 from flask.templating import render_template
 from datetime import datetime  
 import markdown_compiler as mc
+import bleach
 
 ########################################
 # flask/db setup
@@ -92,10 +93,15 @@ def can_register(con, username):
     else:
         return False
 def url_to_html(comment):
-    comment=comment.split(' ')
-    for x in comment:
-        if "https://" in comment[x] or 'http://' in comment[x]:
-            comment_converted = comment[:x]+'<a href='+comment[x]+'></a>' + comment[x+1:]
+    if comment is not None:
+        comment_list=comment.split(' ')
+        for x in comment_list:
+            if "https://" in x or 'http://' in x:
+                comment_converted=bleach.linkify(comment)
+            else:
+                comment_converted=bleach.clean(comment)
+    else:
+        return comment
     return comment_converted
 
 ########################################

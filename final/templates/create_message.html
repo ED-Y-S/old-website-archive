@@ -11,7 +11,9 @@
     <p><strong><h2>Post your thought on Delink</h2></strong></p>
 </div>
 {% endblock %}
-{% block content %}
+
+{% block content%}
+{% autoescape false %}
 <form class="centerlogin" action=/create_message method=POST>
     <table>
         <tr><td>Message</td></tr>
@@ -25,4 +27,5 @@
 {% elif posted %}
 <a class="center"><p>Successfully Posted!</p></a>
 {% endif %}
+{% endautoescape %}
 {% endblock %}
