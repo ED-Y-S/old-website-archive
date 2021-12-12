@@ -31,6 +31,10 @@ a{
 .center {
     text-align:center;
 }
+.center_base {
+    text-align:center;
+    width: 99%;
+}
 #center_table{
     margin-left: auto;
     margin-right: auto;

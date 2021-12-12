@@ -95,16 +95,20 @@ def can_register(con, username):
 def url_to_html(comment):
     if comment is not None:
         comment_list=comment.split(' ')
-        for x in comment_list:
-            if "https://" in x or 'http://' in x:
-                comment_converted=bleach.linkify(comment)
-            else:
-                comment_converted=mc.compile_lines('\n'+comment+'\n')
-                comment_converted=bleach.clean(comment_converted, tags=['a', 'abbr', 'acronym', 'b', 'blockquote', 
-                'code', 'em', 'i', 'li', 'ol', 'strong', 'ul', 'p'])
+        if any('https://' in word for word in comment_list) or any('http://' in word for word in comment_list):
+            print(comment_list)
+            comment_link = bleach.linkify(comment)
+            comment_converted=mc.compile_lines('\n'+comment_link+'\n')
+            comment_converted_clean=bleach.clean(comment_converted, tags=['a', 'abbr', 'acronym', 'b', 'blockquote', 
+            'code', 'em', 'i', 'li', 'ol', 'strong', 'ul', 'p'], attributes=['style', 'href', 'rel'], styles=['color'])
+            return comment_converted_clean
+        else:
+            comment_converted=mc.compile_lines('\n'+comment+'\n')
+            comment_converted_clean=bleach.clean(comment_converted, tags=['a', 'abbr', 'acronym', 'b', 'blockquote', 
+            'code', 'em', 'i', 'li', 'ol', 'strong', 'ul', 'p'], attributes=['style', 'href'], styles=['color'])
+            return comment_converted_clean
     else:
         return comment
-    return comment_converted
 
 ########################################
 # custom routes
@@ -226,14 +230,17 @@ def register():
     print_debug_info()
     create_username = request.form.get('username')
     create_password = request.form.get('password')
+    password_again = request.form.get('password_again')
     create_age = request.form.get('age')
     has_clicked_form = create_username is not None
     if has_clicked_form:
         register_true = can_register(con, create_username)
-        if register_true and create_password !=None and create_password !='':
+        if register_true and create_password !=None and create_password !='' and password_again == create_password :
             cur.execute("INSERT INTO users (username, password, age) values ('"+create_username+"','"+create_password+"','"+str(create_age)+"')")
             con.commit()
-            return render_template('create_user.html', is_created = True) 
+            return render_template('create_user.html', is_created = True)
+        elif register_true and create_password !=None and create_password !='' and password_again != create_password:
+            return render_template('create_user.html', password_check_error = True) 
         if register_true is False: 
             return render_template('create_user.html', display_error = True)
         if create_password == None or create_password == '':
@@ -247,4 +254,4 @@ def menu():
     return render_template('base.html')
 
 
-app.run()
+app.run(host="0.0.0.0", port=80)

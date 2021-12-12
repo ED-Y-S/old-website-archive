@@ -18,17 +18,21 @@
     <table>
         <tr><td>Username</td><td><input type=text name=username></td></tr>
         <tr><td>Password</td><td><input type=password name=password></td></tr>
+        <tr><td>Password Check</td><td><input type=password name=password_again></td></tr>
         <tr><td>Age</td><td><input type=integer name=age></td></tr>
         <tr><td></td><td><input type=submit value='Register'></td></tr>
     </table>
 </form>
 <a class="center"><p>You must include the full URL (including the https/http) the it to be valid</p></a>
 {% if display_error %}
-<a class="center"><p style='color:red;'>Username already exist!</p></a>
+<a class="center"><p style='color:red;'>Username already exists</p></a>
 {% elif is_created %}
 <a class="center"><p>Successfully Registered!</p></a>
 {% endif %}
 {% if no_password %}
 <a class="center"><p style='color:red;'>You have to enter a password</p></a>
+{% endif %}
+{% if password_check_error %}
+<a class="center"><p style='color:red;'>Your password check does not match with the password you typed above</p></a>
 {% endif %}
 {% endblock %}
