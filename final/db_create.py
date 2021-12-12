@@ -61,18 +61,18 @@ cur.execute(sql)
 con.commit()
 
 sql='''
-insert into messages (sender_id,message) values
-    (3, 'I''m actually a toddler');
+insert into messages (sender_id,message,created_at) values
+    (3, 'I''m actually a toddler','2021-11-17 14:37:45');
 '''
 cur.execute(sql)
 con.commit()
 
 sql='''
-insert into messages (sender_id,message) values
-    (5, 'I''m an adult'),
-    (5, 'SQL is the best!!'),
-    (6, 'I''m an adult'),
-    (6, 'WTF is SQL?!  I thought you liked the snake thing.');
+insert into messages (sender_id,message,created_at) values
+    (5, 'I''m an adult', '2021-11-17 14:30:00'),
+    (5, 'SQL is the best!!', '2021-11-18 14:30:00'),
+    (6, 'I''m an adult', '2021-11-17 14:33:01'),
+    (6, 'WTF is SQL?!  I thought you liked the snake thing.', '2021-11-17 14:35:45');
 '''
 cur.execute(sql)
 con.commit()
