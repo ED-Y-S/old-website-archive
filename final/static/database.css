@@ -56,7 +56,12 @@ p ul li{
 .centerlogin {
     margin-left: auto;
     margin-right: auto;
-    width: 15%;
+    width: 10%;
+}
+.centermessage {
+    margin-left: auto;
+    margin-right: auto;
+    width: 7%;
 }
 
 .centerlist {

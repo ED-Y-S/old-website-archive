@@ -193,13 +193,13 @@ def post():
     cur = con.cursor()
     username = request.cookies.get('username')
     password = request.cookies.get('password')
+    id_user = ''
     if username is not None:
-        cur.execute("SELECT * FROM users where username=" +"'"+username+"';")
+        cur.execute("SELECT * FROM users where username=?",[str(username)])
+        for row in cur.fetchall():
+            id_user+=str(row[0])
     else:
         pass
-    id_user = ''
-    for row in cur.fetchall():
-        id_user+=str(row[0])
     time = datetime.now()
     time = time.strftime("%Y-%m-%d %H:%M:%S")
     message = url_to_html(request.form.get('message')) 
