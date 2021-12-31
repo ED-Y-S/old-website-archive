@@ -236,7 +236,7 @@ def register():
     if has_clicked_form:
         register_true = can_register(con, create_username)
         if register_true and create_password !=None and create_password !='' and password_again == create_password :
-            cur.execute("INSERT INTO users (username, password, age) values ('"+create_username+"','"+create_password+"','"+str(create_age)+"')")
+            cur.execute("INSERT INTO users (username, password, age) values (?,?,?)", [str(create_username),str(create_password),str(create_age)])
             con.commit()
             return render_template('create_user.html', is_created = True)
         elif register_true and create_password !=None and create_password !='' and password_again != create_password:
